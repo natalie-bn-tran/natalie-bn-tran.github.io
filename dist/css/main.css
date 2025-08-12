@@ -242,45 +242,11 @@ Version      : 1.0
   overflow: hidden;
 }
 
-.banner-slider {
-  height: 920px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.banner-content-main {
-  padding: 60px 30px;
-  background-color: #FFFFFF;
-}
-
-.banner-content-main span.fs-6 {
-  padding-left: 32px;
-  font-family: "Poppins", sans-serif;
-  color: #272343;
-}
-
-.banner-content-main h4 {
-  margin-bottom: 12px;
-  font-size: 48px;
-}
-
-.banner-content-main h4 a {
-  display: block;
-  color: #272343;
-}
-
-.banner-content-main p {
-  color: #6D7280;
-  margin: 10px 0px 26px 0px;
-}
-
-.banner-content-main .btn-default {
-  height: auto;
-  padding: 12px 29px;
+.banner-img {
+  background-color: #F5F5F5;
+  background-image: url(dist/images/banner.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .blog-date {
@@ -320,107 +286,12 @@ Version      : 1.0
   padding-left: 10px;
 }
 
-.slick-dots {
-  display: inline-block;
-  width: auto;
-  bottom: 18%;
-  left: 65px;
-}
-
-.slick-dots li button::before {
-  width: 10px;
-  height: 10px;
-  background-color: rgba(251, 116, 62, 0.5);
-  border-radius: 50%;
-  color: transparent;
-}
-
-.slick-dots li.slick-active button:before {
-  opacity: 1;
-  background-color: #FB743E;
-  color: transparent;
-}
-
-.slick-prev,
-.slick-next {
-  top: 80%;
-  height: 54px;
-  width: 54px;
-  background-color: #FFFFFF;
-  border-radius: 50%;
-}
-
-.slick-prev:before,
-.slick-next:before {
-  color: #272343;
-}
-
-.slick-prev {
-  left: 0;
-  -webkit-transition: 0.3s all linear;
-  transition: 0.3s all linear;
-}
-
-.slick-prev:hover::before {
-  color: white;
-}
-
-.slick-next {
-  left: 155px;
-  -webkit-transition: 0.3s all linear;
-  transition: 0.3s all linear;
-}
-
-.slick-next:hover::before {
-  color: white;
-}
-
-.slick-prev:hover,
-.slick-prev:focus,
-.slick-next:hover,
-.slick-next:focus {
-  background-color: #FB743E;
-}
-
 @media (max-width: 420px) {
   .heading {
     margin-bottom: 30px;
   }
   .all-tags-list li {
     margin-bottom: 10px;
-  }
-  .banner-content-main h4 {
-    font-size: 32px;
-  }
-  .banner-content-main {
-    padding: 30px 20px;
-  }
-  .slick-dots li button::before {
-    background-color: white !important;
-  }
-  .banner-slider {
-    height: auto;
-    padding: 30px 0px 60px 0px;
-  }
-  .slick-prev,
-  .slick-next {
-    top: 95%;
-  }
-  .slick-prev {
-    left: 10%;
-  }
-  .slick-next {
-    right: 10% !important;
-    left: auto;
-  }
-  .slick-dots {
-    bottom: 2%;
-    left: 50% !important;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
-  }
-  .slick-list {
-    margin-bottom: 30px;
   }
 }
 
@@ -431,76 +302,10 @@ Version      : 1.0
   .all-tags-list li {
     margin-bottom: 10px;
   }
-  .banner-content-main h4 {
-    font-size: 32px;
-  }
-  .banner-content-main {
-    padding: 30px 20px;
-  }
-  .slick-dots li button::before {
-    background-color: white !important;
-  }
-  .banner-slider {
-    height: auto;
-    padding: 30px 0px 60px 0px;
-  }
-  .slick-prev,
-  .slick-next {
-    top: 95%;
-  }
-  .slick-prev {
-    left: 10%;
-  }
-  .slick-next {
-    right: 10% !important;
-    left: auto;
-  }
-  .slick-dots {
-    bottom: 2%;
-    left: 50% !important;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
-  }
-  .slick-list {
-    margin-bottom: 30px;
-  }
 }
 
 @media (min-width: 575px) and (max-width: 767px) {
   .heading {
-    margin-bottom: 30px;
-  }
-  .banner-content-main h4 {
-    font-size: 32px;
-  }
-  .banner-content-main {
-    padding: 30px 20px;
-  }
-  .slick-dots li button::before {
-    background-color: white !important;
-  }
-  .banner-slider {
-    height: auto;
-    padding: 30px 0px 60px 0px;
-  }
-  .slick-prev,
-  .slick-next {
-    top: 95%;
-  }
-  .slick-prev {
-    left: 10%;
-  }
-  .slick-next {
-    right: 10% !important;
-    left: auto;
-  }
-  .slick-dots {
-    bottom: 2%;
-    left: 50% !important;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
-  }
-  .slick-list {
     margin-bottom: 30px;
   }
 }
@@ -511,15 +316,6 @@ Version      : 1.0
   }
   .slick-list {
     padding-bottom: 120px;
-  }
-  .banner-content-main h4 {
-    line-height: 56px;
-  }
-  .banner-slider {
-    height: 90vh;
-  }
-  .slick-dots li button::before {
-    background-color: white !important;
   }
 }
 
