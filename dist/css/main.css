@@ -244,7 +244,7 @@ Version      : 1.0
 
 .banner-img {
   background-color: #F5F5F5;
-  background-image: url(dist/images/banner.jpg);
+  background-image: url(../images/banner.jpg);
   background-size: cover;
   background-repeat: no-repeat;
 }
