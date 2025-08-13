@@ -19,7 +19,7 @@ Version      : 1.0
         left: 0;
         width: 112px;
         height: 4px;
-        background-color: $activeText;
+        background-color: #73822e;
     }
 }
 
@@ -66,7 +66,7 @@ Version      : 1.0
             transition: 0.3s all linear;
 
             &:hover {
-                background-color: $activeText;
+                background-color: #73822e;
                 color: white;
             }
         }
@@ -91,7 +91,7 @@ Version      : 1.0
             transition: 0.3s all linear;
 
             &:hover {
-                background-color: $activeText;
+                background-color: #73822e;
                 color: white;
             }
         }
@@ -236,7 +236,7 @@ Version      : 1.0
 .slick-prev:focus,
 .slick-next:hover,
 .slick-next:focus {
-    background-color: $activeText;
+    background-color: #73822e;
 }
 
 // Slick SLider Customization Ends Here
