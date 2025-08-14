@@ -218,7 +218,7 @@
                 top:50%;
                 transform: translateY(-50%);
                 left: 16px;
-                color: #272343;
+                color: $black;
             }
         }
     }
@@ -329,7 +329,7 @@
 
 // Footer Starts Here
 footer{
-    background: #2b3224;
+    background: $black;
     padding-top: 100px;
     .footer{
         &-info{
