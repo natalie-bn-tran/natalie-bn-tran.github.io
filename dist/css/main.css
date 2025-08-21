@@ -2,6 +2,7 @@
 body {
   font-family: 'Poppins', sans-serif;
   font-family: 'PT Serif', serif;
+  background-color: #2b3224;
 }
 
 .fs-5 {
@@ -17,7 +18,7 @@ h3 {
   line-height: 72px;
   font-weight: 700;
   font-family: "PT Serif", serif;
-  color: #2b3224;
+  color: #73822e;
 }
 
 h4 {
@@ -25,7 +26,7 @@ h4 {
   line-height: 48px;
   font-weight: 700;
   font-family: "PT Serif", serif;
-  color: #2b3224;
+  color: #73822e;
 }
 
 h5 {
@@ -33,7 +34,7 @@ h5 {
   line-height: 38px;
   font-weight: 700;
   font-family: "PT Serif", serif;
-  color: #2b3224;
+  color: #73822e;
 }
 
 h6 {
@@ -41,13 +42,14 @@ h6 {
   line-height: 36px;
   font-weight: 700;
   font-family: "PT Serif", serif;
-  color: #2b3224;
+  color: #73822e;
 }
 
 p {
   font-size: 16px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
+  color: #68634f;
 }
 
 @media (max-width: 420px) {
