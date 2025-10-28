@@ -168,6 +168,7 @@ Template Name: Blogy HTML Template
 Version      : 1.0
 * ----------------------------------------------------------------------------------------
 */
+
 .heading {
   margin-bottom: 50px;
   position: relative;
@@ -1475,3 +1476,10 @@ footer .copy-right p a:hover {
   }
 }
 /*# sourceMappingURL=main.css.map */
+
+/*--------------------------------*/
+.about {
+  padding-top: 100px;
+  padding-bottom: 0;
+  position: relative;
+}
