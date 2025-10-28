@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
 body {
   font-family: 'Poppins', sans-serif;
-  font-family: 'PT Serif', serif;
+  font-family: "Fredoka", sans-serif;
   background-color: #2b3224;
 }
 
@@ -17,7 +19,7 @@ h3 {
   font-size: 64px;
   line-height: 72px;
   font-weight: 700;
-  font-family: "PT Serif", serif;
+  font-family: "Fredoka", sans-serif;
   color: #73822e;
 }
 
@@ -25,31 +27,23 @@ h4 {
   font-size: 40px;
   line-height: 48px;
   font-weight: 700;
-  font-family: "PT Serif", serif;
+  font-family: "Fredoka", sans-serif;
   color: #73822e;
 }
 
 h5 {
-  font-size: 32px;
+  font-size: 28px;
   line-height: 38px;
   font-weight: 700;
-  font-family: "PT Serif", serif;
-  color: #73822e;
-}
-
-h6 {
-  font-size: 28px;
-  line-height: 36px;
-  font-weight: 700;
-  font-family: "PT Serif", serif;
+  font-family: "Fredoka", sans-serif;
   color: #73822e;
 }
 
 p {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
-  color: #68634f;
+  color: #7b755d;
 }
 
 @media (max-width: 420px) {
@@ -147,8 +141,24 @@ img {
   vertical-align: middle;
 }
 
-a {
-  text-decoration: none !important;
+a:link {
+  text-decoration: none!important;
+  color: #73822e;
+}
+
+a:visited {
+  text-decoration: none!important;
+  color: #73822e;
+}
+
+a:hover {
+  text-decoration: none!important;
+  color: #73822e;
+}
+
+a:active {
+  text-decoration: none!important;
+  color: #73822e;
 }
 
 /*
@@ -1060,9 +1070,9 @@ Version      : 1.0
 
 .header .main-menu-items li a {
   padding-bottom: 10px;
-  color: #68634f;
+  color: #7b755d;
   font-family: "Poppins", sans-serif !important;
-  font-size: 16px;
+  font-size: 20px;
   margin-right: 24px !important;
   -webkit-transition: 0.3s all linear;
   transition: 0.3s all linear;
@@ -1237,7 +1247,7 @@ footer {
 
 footer .footer-info p {
   margin-top: 16px;
-  color: #68634f;
+  color: #7b755d;
 }
 
 footer .footer-wizard h6 {
@@ -1248,11 +1258,11 @@ footer .footer-wizard h6 {
 }
 
 footer .footer-wizard a {
-  color: #68634f;
+  color: #7b755d;
   margin-bottom: 10px;
   display: block;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 20px;
   font-family: "Poppins", sans-serif;
   -webkit-transition: 0.3s all linear;
   transition: 0.3s all linear;
@@ -1272,18 +1282,18 @@ footer .copy-right {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  border-top: 1px solid #68634f;
+  border-top: 1px solid #7b755d;
   margin-top: 70px;
   padding: 20px 0px;
 }
 
 footer .copy-right p {
   margin-bottom: 0;
-  color: #68634f;
+  color: #7b755d;
 }
 
 footer .copy-right p a {
-  color: #68634f;
+  color: #7b755d;
   -webkit-transition: 0.3s all linear;
   transition: 0.3s all linear;
 }
