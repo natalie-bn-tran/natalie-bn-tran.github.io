@@ -161,6 +161,11 @@ a:active {
   color: #73822e;
 }
 
+hr {
+  border-top: 5px solid #73822e;
+  border-radius: 5px;
+}
+
 /*
 * ----------------------------------------------------------------------------------------
 Author       : Zakir Soft
@@ -335,83 +340,6 @@ Version      : 1.0
 @media (min-width: 992px) and (max-width: 1200px) {
   .all-tags-list li {
     margin-bottom: 10px;
-  }
-}
-
-.search-area {
-  padding: 150px 0px 100px 0px;
-  background-color: #F5F5F5;
-}
-
-.search-area h4 {
-  margin-bottom: 30px;
-}
-
-.search-area .form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.search-area-input {
-  position: relative;
-}
-
-.search-area-input input {
-  padding-left: 68px;
-  height: 66px;
-  width: 770px;
-  border: 2px solid transparent;
-  font-family: "Poppins", sans-serif;
-  margin-right: 8px;
-  -webkit-transition: 0.3s all linear;
-  transition: 0.3s all linear;
-}
-
-.search-area-input input:focus {
-  border: 2px solid #73822e;
-}
-
-.search-area-input svg {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  left: 30px;
-  color: #2b3224;
-}
-
-@media (max-width: 991px) {
-  .search-area {
-    padding: 30px 0px;
-  }
-  .search-area .form {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
-  }
-  .search-area .form .btn-default {
-    height: 55px;
-    width: 100%;
-  }
-  .search-area-input {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  .search-area-input input {
-    width: 100% !important;
-    margin-right: 0;
-    height: 60px;
   }
 }
 
