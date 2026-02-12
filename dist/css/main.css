@@ -166,6 +166,49 @@ hr {
   border-radius: 5px;
 }
 
+.blog-header {
+  padding-top: 75px;
+  padding-bottom: 75px;
+  position: relative;
+}
+
+.blog-post h4 .active-item {
+  color: #73822e !important;
+}
+
+.blog-post h4 a {
+  margin-top: 0;
+  padding-bottom: 5px;
+  color: #7b755d;
+  -webkit-transition: 0.3s all linear;
+  transition: 0.3s all linear;
+  position: relative;
+}
+
+.blog-post h4 a::after {
+  position: absolute;
+  content: '';
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: #73822e;
+  -webkit-transition: 0.3s all linear;
+  transition: 0.3s all linear;
+}
+
+.blog-post h4 a:hover {
+  color: #73822e;
+}
+
+.blog-post h4 a.active-item::after, .blog-post h4 a:hover::after {
+  width: 100%;
+}
+
+.blog-post p {
+  margin-bottom: 0;
+}
+
 /*
 * ----------------------------------------------------------------------------------------
 Author       : Zakir Soft
@@ -998,7 +1041,7 @@ Version      : 1.0
 }
 
 .header .main-menu-items li a {
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   color: #7b755d;
   font-family: "Poppins", sans-serif !important;
   font-size: 20px;
@@ -1026,34 +1069,6 @@ Version      : 1.0
 
 .header .main-menu-items li a.active-item::after, .header .main-menu-items li a:hover::after {
   width: 100%;
-}
-
-.header .main-menu .header-searchbar {
-  position: relative;
-}
-
-.header .main-menu .header-searchbar input {
-  font-family: "Poppins", sans-serif !important;
-  border: 2px solid transparent;
-  width: 312px;
-  height: 48px;
-  background-color: rgba(245, 245, 245, 0.7);
-  padding-left: 45px;
-  -webkit-transition: 0.3s all linear;
-  transition: 0.3s all linear;
-}
-
-.header .main-menu .header-searchbar input:focus {
-  border: 2px solid #73822e;
-}
-
-.header .main-menu .header-searchbar svg {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  left: 16px;
-  color: #2b3224;
 }
 
 .blog-intro-area span.has-line a {
