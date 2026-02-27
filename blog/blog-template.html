@@ -7,29 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS Link -->
-    <link rel="stylesheet" href="dist/css/vendor/bootstrap.min.css">
-
-    <!-- Slick CSS Link -->
-    <link rel="stylesheet" href="dist/css/vendor/slick.css">
-    <link rel="stylesheet" href="dist/css/vendor/slick-theme.css">
+    <link rel="stylesheet" href="../dist/css/vendor/bootstrap.min.css">
 
     <!-- Icon Library Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
     <!-- Theme CSS Link -->
-    <link rel="stylesheet" href="dist/css/main.css">
+    <link rel="stylesheet" href="../dist/css/main.css">
 
     <title>Natalie Tran</title>
 </head>
 
 <body>
     <!-- Header Starts Here -->
-    <header>
+    <header class="header">
         <div class="container">
-            <div class="header">
+            <div class="header-inner">
                 <!-- Logo Starts Here -->
-                <a href="index.html">
-                    <img src="dist/images/logo.svg" width="80" height="80">
+                <a href="/">
+                    <img src="../dist/images/logo.svg" width="80" height="80">
                 </a>
                 <!-- Logo Ends Here -->
 
@@ -45,7 +41,7 @@
                 <div class="main-menu d-none d-lg-flex">
                     <ul class="main-menu-items list-unstyled">
                         <li><a href="/" class="main-menu-item">Home</a></li>
-                        <li><a href="/#about" class="main-menu-item">About</a></li>
+                        <li><a href="#about" class="main-menu-item">About</a></li>
                         <li><a href="/blog" class="main-menu-item">Blog</a></li>
                     </ul>
                 </div>
@@ -55,17 +51,22 @@
     </header>
     <!-- Header Ends Here -->
 
-    <!-- Blog Starts Here -->
-
-    <!-- Blog Header Starts Here -->
-    <div class="container">
-        <h3>Blogs</h3>
-        <hr>
-    </div>
-    <!-- Blog Header Ends Here -->
-
-
-    <!-- Blog Ends Here -->
+    <!-- Article Starts Here -->
+     <div class="container">
+        <section class="article-title">
+            <h3>Title</h3>
+        </section>
+        <section class="article-section"> <!-- rename -->
+            <h4>Heading</h4>
+            <p>Words</p>
+            <br>
+            <section class="article-subsection"> <!-- rename -->
+                <h5>Subheading</h5>
+                <p>Words</p>
+            </section>
+        </section>
+     </div>
+    <!-- Article Ends Here -->
 
     <!-- jQuery JS Link -->
     <script src="dist/js/jquery-3.6.0.min.js"></script>

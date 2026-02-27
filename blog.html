@@ -9,10 +9,6 @@
     <!-- Bootstrap CSS Link -->
     <link rel="stylesheet" href="dist/css/vendor/bootstrap.min.css">
 
-    <!-- Slick CSS Link -->
-    <link rel="stylesheet" href="dist/css/vendor/slick.css">
-    <link rel="stylesheet" href="dist/css/vendor/slick-theme.css">
-
     <!-- Icon Library Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
@@ -24,9 +20,9 @@
 
 <body>
     <!-- Header Starts Here -->
-    <header>
+    <header class="header">
         <div class="container">
-            <div class="header">
+            <div class="header-inner">
                 <!-- Logo Starts Here -->
                 <a href="/">
                     <img src="dist/images/logo.svg" width="80" height="80">
@@ -45,7 +41,7 @@
                 <div class="main-menu d-none d-lg-flex">
                     <ul class="main-menu-items list-unstyled">
                         <li><a href="/" class="main-menu-item">Home</a></li>
-                        <li><a href="/#about" class="main-menu-item">About</a></li>
+                        <li><a href="#about" class="main-menu-item">About</a></li>
                         <li><a href="/blog" class="main-menu-item">Blog</a></li>
                     </ul>
                 </div>
@@ -59,11 +55,32 @@
 
     <!-- Blog Header Starts Here -->
     <div class="container">
-        <h3>Blogs</h3>
-        <hr>
+        <div class="blog-page-header">
+            <h3>Blogs</h3>
+            <p>Experiences and things I've worked on.</p>
+        </div>
     </div>
     <!-- Blog Header Ends Here -->
 
+    <!-- Blog Posts Start Here -->
+    <div class="container">
+        <div class="blog-post">
+            <hr>
+            <div class="row align-items-center">
+                <div class="col-12 col-md-auto">
+                    <p class="mb-1 mb-md-0">mm.dd.yy</p>
+                </div>
+                <div class="col-12 col-md ps-md-5">
+                    <div class="mb-1 mb-md-0">
+                        <h4><a href="[BLOG POST]">TITLE</a></h4>
+                        <p>Description</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <!--Blog Posts Ends Here -->
 
     <!-- Blog Ends Here -->
 
