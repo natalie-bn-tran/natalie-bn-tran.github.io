@@ -53,35 +53,47 @@
 
     <!-- Article Starts Here -->
      <div class="container">
-        <section class="article-title">
-            <h3>Title</h3>
-        </section>
-        <section class="article-section"> <!-- rename -->
-            <h4>Heading</h4>
-            <p>Words</p>
-            <br>
-            <section class="article-subsection"> <!-- rename -->
-                <h5>Subheading</h5>
-                <p>Words</p>
-            </section>
-        </section>
+        <div class="article">
+            <main class="article-main">
+                <section class="article-title">
+                    <h3>Title</h3>
+                </section>
+                <section id="heading" class="article-section"> <!-- rename -->
+                    <h4>Heading</h4>
+                    <p>Words</p>
+                    <br>
+                    <section id="subheading" class="article-subsection"> <!-- rename -->
+                        <h5>Subheading</h5>
+                        <p>Words</p>
+                    </section>
+                </section>
+            </main>
+            <aside class="toc">
+                <h5>Contents</h5>
+                <ul class="list-unstyled">
+                    <li class="toc-h1">
+                        <a href="#heading">Heading</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#subheading">Subheading</a>
+                    </li>
+                </ul>
+            </aside>
+        </div>
      </div>
     <!-- Article Ends Here -->
 
     <!-- jQuery JS Link -->
-    <script src="dist/js/jquery-3.6.0.min.js"></script>
+    <script src="../dist/js/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap JS Link -->
-    <script src="dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Menu JS Link -->
-    <script src="dist/js/menu.js"></script>
-
-    <!-- Slick JS Link -->
-    <script src="dist/js/slick.min.js"></script>
+    <script src="../dist/js/menu.js"></script>
 
     <!-- Custom JS Link -->
-    <script src="dist/js/main.js"></script>
+    <script src="../dist/js/main.js"></script>
 </body>
 
 </html>
