@@ -201,14 +201,14 @@ hr {
 
 .article-main {
   position: relative;
-  width: 80%;
+  width: 77%;
 }
 
 .toc {
   display: block;
   padding-top: 75px;
-  position: relative;
-  right: -65px;
+  position: sticky;
+  margin-left: auto;
   width: 200px;
   overflow-y: auto;
 }
@@ -220,22 +220,22 @@ hr {
 }
 
 .toc-h1 a {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   color: #7b755d;
 }
 
 .toc-h2 a {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   color: #7b755d;
   margin-left: 10px;
 }
 
-.toc .current {
-  font-weight: 400;
+.toc a.active {
+  font-weight: 800;
   color: #73822e;
 }
 
@@ -701,6 +701,12 @@ footer {
 @media (max-width: 991px) {
   footer {
     padding-top: 0px;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer-empty {
+    display: none;
   }
 }
 
