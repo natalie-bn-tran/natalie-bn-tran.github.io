@@ -53,21 +53,27 @@
 
     <!-- Article Starts Here -->
      <div class="container">
-        <div class="article">
-            <main class="article-main">
+        <main class="article">
+
+            <!-- Article Content Starts Here -->
+            <div class="article-main">
                 <section class="article-title">
                     <h3>Title</h3>
                 </section>
-                <section id="heading" class="article-section"> <!-- rename -->
+                <section id="heading"> <!-- rename -->
                     <h4>Heading</h4>
                     <p>Words</p>
                     <br>
-                    <section id="subheading" class="article-subsection"> <!-- rename -->
-                        <h5>Subheading</h5>
-                        <p>Words</p>
-                    </section>
                 </section>
-            </main>
+                <section id="subheading"> <!-- rename -->
+                    <h5>Subheading</h5>
+                    <p>Words</p>
+                </section>
+            </div>
+            <div class="section-padding"></div>
+            <!-- Article Content Ends Here -->
+
+            <!-- TOC Starts Here -->
             <aside class="toc">
                 <ul class="list-unstyled">
                     <li class="toc-h1">
@@ -78,9 +84,48 @@
                     </li>
                 </ul>
             </aside>
-        </div>
+            <!-- TOC Ends Here -->
+        </main>
      </div>
     <!-- Article Ends Here -->
+
+    <!-- Footer Starts Here -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-lg-between">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-info">
+                        <a href="index.html">
+                            <img src="../dist/images/logo.svg" width="120" height="120">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-2 footer-empty">
+                    <div class="footer-wizard">
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 footer-empty">
+                    <div class="footer-wizard">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-wizard">
+                        <h5>Contact</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="mailto:tran.bn.natalie@gmail.com">tran.bn.natalie@gmail.com</a></li>
+                            <li><a href="https://www.linkedin.com/in/natalie-bn-tran/">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="copy-right">
+                <p>@ 2026 - Natalie Tran</p>
+                <p>Designed & Develop by <a href="https://zakirsoft.com/">Zakirsoft</a></p>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Ends Here -->
 
     <!-- jQuery JS Link -->
     <script src="../dist/js/jquery-3.6.0.min.js"></script>

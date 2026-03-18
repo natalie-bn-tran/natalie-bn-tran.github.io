@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS Link -->
+    <link rel="stylesheet" href="../dist/css/vendor/bootstrap.min.css">
+
+    <!-- Icon Library Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+    <!-- Theme CSS Link -->
+    <link rel="stylesheet" href="../dist/css/main.css">
+
+    <title>Natalie Tran</title>
+</head>
+
+<body>
+    <!-- Header Starts Here -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <!-- Logo Starts Here -->
+                <a href="/">
+                    <img src="../dist/images/logo.svg" width="80" height="80">
+                </a>
+                <!-- Logo Ends Here -->
+
+                <!-- Mobile Menu Starts Here -->
+                <div class="menu-btn">
+                    <div class="menu-btn-lines">
+
+                    </div>
+                </div>
+                <!-- Mobile Menu Ends Here -->
+
+                <!-- Menu Starts Here -->
+                <div class="main-menu d-none d-lg-flex">
+                    <ul class="main-menu-items list-unstyled">
+                        <li><a href="/" class="main-menu-item">Home</a></li>
+                        <li><a href="/#about" class="main-menu-item">About</a></li>
+                        <li><a href="/blog" class="main-menu-item">Blog</a></li>
+                    </ul>
+                </div>
+                <!-- Menu Items Ends Here -->
+            </div>
+        </div>
+    </header>
+    <!-- Header Ends Here -->
+
+    <!-- Article Starts Here -->
+     <div class="container">
+        <main class="article">
+
+            <!-- Article Content Starts Here -->
+            <div class="article-main">
+                <section class="article-title">
+                    <h3>Network Services Lab (Evan's Lab)</h3>
+                </section>
+                <section id="background">
+                    <h4>Background</h4>
+                    <p>
+                        Evan's Lab is an infrastructure lab that covers networking, 
+                        setting up services, Active Directory, and using firewalls to 
+                        secure a network. 
+                        <a href="https://www.linkedin.com/in/evan-deters" target="_blank" rel="noopener noreferrer">Evan</a> 
+                        created the lab for SWIFT Pals with a goal of helping students 
+                        gain hands-on experience in cybersecurity.
+                    </p>
+                </section>
+                <section id="personal-experience">
+                    <h4>Personal Experience</h4>
+                    <p>
+                        <a href="https://adaptable-april-ff0.notion.site/6194c18ff1a34318bf9e738de740ec72?v=1f91d402dc2a46ec82d05543210268f0&pvs=74" target="_blank" rel="noopener noreferrer">Original Documentation</a>
+                        <br>
+                        I started the lab in March 2024 with little knowledge of 
+                        networking and how services work. Three months later, I became 
+                        the second person to finish the lab.
+                    </p>
+                    <div class="mt-25"></div>
+                    <p>
+                        This is one of the most valuable learning experiences I've had. 
+                        I was better able to understand how services interact with each 
+                        other/Active Directory and  strengthen my troubleshooting skills. 
+                        It also teaches important lessons like patience and perseverance, 
+                        especially when services are incorrectly set up and when 
+                        installation processes need to be restarted.
+                    </p>
+                </section>
+                <div class="mt-35"></div>
+                <hr>
+                <section id="os-requirements">
+                    <h4>OS Requirements</h4>
+                    <ul>
+                        <li>pfSense (Router)</li>
+                        <li>Windows Server 22 (Domain Controller)</li>
+                        <li>Windows Server 2016 (XAMPP Web Server)</li>
+                        <li>Windows Server 2012 R2 (IIS Web Server, Secondary Domain Controller)</li>
+                        <li>Windows 10 (Client)</li>
+                        <li>Windows 7 (SMB)</li>
+                        <li>Ubuntu 22.04 (MySQL)</li>
+                        <li>Centos 7 (Apache Web Server)</li>
+                        <li>Debian 11 (Nginx Web Proxy)</li>
+                        <li>Ubuntu 18 (SFTP)</li>
+                    </ul>
+                </section>
+                <section id="service-requirements">
+                    <h4>Service Requirements</h4>
+                    <ol>
+                        <li>Active Directory</li>
+                            <ol type="a">
+                                <li>Primary Domain Controller and Primary DNS Server → Windows Server 2022</li>
+                                <li>Secondary DC and DNS → Windows Server 2012 R2</li>
+                                <li>All machines should be joined to the Domain</li>
+                            </ol>
+                        <li>XAMPP Web Server</li>
+                            <ol type="a">
+                                <li>WordPress Website using Ubuntu 22.04 for Database</li>
+                            </ol>
+                        <li>SMB</li>
+                            <ol type="a">
+                                <li>Windows 7 shares proprietary SWIFT data (🍆) to only Windows 10 Client</li>
+                            </ol>
+                        <li>MySQL</li>
+                            <ol type="a">
+                                <li>Database for Windows Server 2016 and Centos 7</li>
+                                <li style="font-weight: bold;">Ensure database is secure from Justin's hands.</li>
+                            </ol>
+                        <li>Apache Web Server</li>
+                            <ol type="a">
+                                <li>WordPress Website using Ubuntu 22.04 for Database</li>
+                            </ol>
+                        <li>Nginx Web Proxy</li>
+                            <ol type="a">
+                                <li>Proxy for IIS Website</li>
+                            </ol>
+                        <li>SFTP</li>
+                            <ol type="a">
+                                <li>Share classified SWIFT HR (🍑) to only Windows 10 Client</li>
+                            </ol>
+                    </ol>
+                </section>
+                <section id="security-considerations">
+                    <h4>Security Considerations</h4>
+                    <ul>
+                        <li>
+                            SWIFT shouldn't be leaking out proprietary data to other clubs. 
+                            That is how insurrections occur.
+                        </li>
+                        <li>SWIFT does not want violations of GDPR, as we operate worldwide. 
+                            Make sure that HR data is locked down.
+                        </li>
+                        <li>The IIS web server shouldn't be reachable from any of its 
+                            computer's interfaces. That's what the Web Proxy is for!
+                        </li>
+                        <li>NSA released a different beast in 2017, however, you are running 
+                            the same animal. Please name it.
+                        </li>
+                        <li>WordPress creds 🤔</li>
+                        <li>We don't accept credit cards, but we still want to be 1/12th 
+                            PCI-DSS compliant. Please follow PCI-DSS requirement 1 for all machines.
+                        </li>
+                    </ul>
+                <div class="mt-35"></div>
+                </section>
+                <section id="documentation">
+                    <p><a href="https://adaptable-april-ff0.notion.site/actually-doing-evan-s-lab-a44ac1a906a74b5abd0b72062454da6c" target="_blank" rel="noopener noreferrer">Documentation</a></p>
+                </section>
+                <div class="section-padding"></div>
+            </div>
+            <!-- Article Content Ends Here -->
+
+            <!-- TOC Starts Here -->
+            <aside class="toc">
+                <ul class="list-unstyled">
+                    <li class="toc-h1">
+                        <a href="#background">Background</a>
+                    </li>
+                    <li class="toc-h1">
+                        <a href="#personal-experience">Personal Experience</a>
+                    </li>
+                    <li class="toc-h1">
+                        <a href="#os-requirements">OS Requirements</a>
+                    </li>
+                    <li class="toc-h1">
+                        <a href="#service-requirements">Service Requirements</a>
+                    </li>
+                    <li class="toc-h1">
+                        <a href="#security-considerations">Security Considerations</a>
+                    </li>
+                    <li class="toc-h1">
+                        <a href="#documentation">Documentation</a>
+                    </li>
+                </ul>
+            </aside>
+            <!-- TOC Ends Here -->
+        </main>
+     </div>
+    <!-- Article Ends Here -->
+
+    <!-- Footer Starts Here -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-lg-between">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-info">
+                        <a href="index.html">
+                            <img src="../dist/images/logo.svg" width="120" height="120">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-2 footer-empty">
+                    <div class="footer-wizard">
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 footer-empty">
+                    <div class="footer-wizard">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-wizard">
+                        <h5>Contact</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="mailto:tran.bn.natalie@gmail.com">tran.bn.natalie@gmail.com</a></li>
+                            <li><a href="https://www.linkedin.com/in/natalie-bn-tran/">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="copy-right">
+                <p>@ 2026 - Natalie Tran</p>
+                <p>Designed & Develop by <a href="https://zakirsoft.com/">Zakirsoft</a></p>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Ends Here -->
+
+    <!-- jQuery JS Link -->
+    <script src="../dist/js/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS Link -->
+    <script src="../dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu JS Link -->
+    <script src="../dist/js/menu.js"></script>
+
+    <!-- Custom JS Link -->
+    <script src="../dist/js/main.js"></script>
+    <script src="../dist/js/toc.js"></script>
+</body>
+
+</html>

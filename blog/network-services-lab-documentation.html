@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS Link -->
+    <link rel="stylesheet" href="../dist/css/vendor/bootstrap.min.css">
+
+    <!-- Icon Library Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+    <!-- Theme CSS Link -->
+    <link rel="stylesheet" href="../dist/css/main.css">
+
+    <title>Natalie Tran</title>
+</head>
+
+<body>
+    <!-- Header Starts Here -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <!-- Logo Starts Here -->
+                <a href="/">
+                    <img src="../dist/images/logo.svg" width="80" height="80">
+                </a>
+                <!-- Logo Ends Here -->
+
+                <!-- Mobile Menu Starts Here -->
+                <div class="menu-btn">
+                    <div class="menu-btn-lines">
+
+                    </div>
+                </div>
+                <!-- Mobile Menu Ends Here -->
+
+                <!-- Menu Starts Here -->
+                <div class="main-menu d-none d-lg-flex">
+                    <ul class="main-menu-items list-unstyled">
+                        <li><a href="/" class="main-menu-item">Home</a></li>
+                        <li><a href="/#about" class="main-menu-item">About</a></li>
+                        <li><a href="/blog" class="main-menu-item">Blog</a></li>
+                    </ul>
+                </div>
+                <!-- Menu Items Ends Here -->
+            </div>
+        </div>
+    </header>
+    <!-- Header Ends Here -->
+
+    <!-- Article Starts Here -->
+     <div class="container">
+        <main class="article">
+
+            <!-- Article Content Starts Here -->
+            <div class="article-main">
+                <section class="article-title">
+                    <h3>Network Services Lab Documentation</h3>
+                </section>
+                <p><i>Note: For the Linux machines, all commands were run as the root user.</i></p>
+                <section id="network-configuration">
+                    <h4>Network Configuration</h4>
+                    <p>
+                        Completing the networking for each of the machines is crucial. This will 
+                        give the machines their own IP address, allowing 
+                        communication, data transportation, and sets the stage for changing 
+                        network settings.<br>
+                        <b>IP Address:</b> A unique identifier for a device on a network.
+                    </p>
+                    <div class="mt-25"></div>
+                    <p>
+                        To make things easier, the LAN subnet will be same as the one automatically 
+                        set in the pfSense router (192.168.1.0/24), and the last octets of the 
+                        non-router machines will be 2-10.
+                    </p>
+                    <h6>Network Configuration Summary</h6>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="no-left-border">OS</th>
+                                <th>IP Address</th>
+                                <th>Hostname</th>
+                                <th class="no-right-border">Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="no-left-border">pfSense</td>
+                                <td>
+                                    WAN: 172.16.xxx.1/16<br>
+                                    <i>Note: xxx is the third octet of the WAN IP.</i><br>
+                                    LAN: 192.168.1.1/24
+                                </td>
+                                <td>N/A</td>
+                                <td class="no-right-border">Router</td>
+                            </tr>
+                            <tr>
+                                <td class="no-left-border">Windows Server 2022</td>
+                                <td>192.168.1.2/24</td>
+                                <td>DC01</td>
+                                <td class="no-right-border">Primary Domain Controller</td>
+                            </tr>
+                            <tr>
+                                <td class="no-left-border">Windows Server 2016</td>
+                                <td>192.168.1.3/24</td>
+                                <td>WEB01</td>
+                                <td class="no-right-border">XAMPP Web Server</td>
+                            </tr>
+                            <tr>
+                                <td class="no-left-border">Windows Server 2012 R2</td>
+                                <td>192.168.1.4/24</td>
+                                <td>DC02</td>
+                                <td class="no-right-border">Secondary Domain Controller,<br>IIS Web Server</td>
+                            </tr>
+                            <tr>
+                                <td class="no-left-border">Windows 10</td>
+                                <td>192.168.1.5/24</td>
+                                <td>WKS01</td>
+                                <td class="no-right-border">Workstation/Client</td>
+                            </tr>
+                            <tr>
+                                <td class="no-left-border">Windows 7</td>
+                                <td>192.168.1.6/24</td>
+                                <td>SMB01</td>
+                                <td class="no-right-border">SMB Server</td>
+                            </tr>
+                            <tr>
+                                <td class="no-left-border">Ubuntu 22.04</td>
+                                <td>192.168.1.7/24</td>
+                                <td>SQL01</td>
+                                <td class="no-right-border">MySQL Server</td>
+                            </tr>
+                            <tr>
+                                <td class="no-left-border">CentOS 7</td>
+                                <td>192.168.1.8/24</td>
+                                <td>WEB02</td>
+                                <td class="no-right-border">Apache Web Server</td>
+                            </tr>
+                            <tr>
+                                <td class="no-left-border">Debian 11</td>
+                                <td>192.168.1.9/24</td>
+                                <td>WEB03</td>
+                                <td class="no-right-border">NGINX Reverse Proxy</td>
+                            </tr>
+                            <tr class="no-bottom-border">
+                                <td class="no-left-border">Ubuntu 18.04</td>
+                                <td>192.168.1.10/24</td>
+                                <td>SFTP01</td>
+                                <td class="no-right-border">SFTP Server</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section id="pfsense">
+                    <h5>pfSense</h5>
+                    <p>
+                        WAN: It's set with DHCP, but it's recommended to set it statically.<br>
+                        LAN: This can be kept to the default IP address, but can be changed as well.
+                    </p>
+                    <div class="mt-25"></div>
+                    <p style="margin-bottom: 0px;">Change the IP address of a pfSense router, using the CLI:</p>
+                    <ol>
+                        <li>Enter 2</li>
+                        <li>Enter 1 or 2, depending on if the WAN or LAN is being changed</li>
+                        <li>Enter the new IP address in this format: xxx.xxx.xxx.xxx/yy</li>
+                        <ul class="list-unstyled">
+                            <li><i>Note: xxx.xxx.xxx.xxx is the IP address, and /yy is the subnet 
+                                in CIDR format (the subnet can be entered after if it was not 
+                                written with the IP address).
+                            </i></li>
+                            <li><i>For WAN: yy = 16</i></li>
+                            <li><i>For LAN: yy = 24</i></li>
+                        </ul>
+                        <li>For WAN: the default gateway is 172.16.0.1, and enter y when 
+                            prompted if this should be the default upstream gateway
+                        </li>
+                        <ul class="list-unstyled">
+                            <li><i>Note: This only applies for if you're using the SDC 
+                                infrastructure. 172.16.0.1 is the IP address of  the SDC's router 
+                                and  will allow the VMs to have Internet access.
+                            </i></li>
+                        </ul>
+                        <li>Enter n or hit enter for the rest of the options</li>
+                    </ol>
+                    <div class="mt-25"></div>
+                    <p style="margin-bottom: 0px;">
+                        For the lab, it is recommended to have 1:1 NAT set up on the router to 
+                        have the ability to work from the host machine.<br>
+                        <b>Network Address Translation (NAT):</b> Translates IP addresses between interfaces.<br>
+                        <b>1:1 NAT:</b> Translates a WAN IP address to a LAN IP address and vice versa.<br>
+                    </p>
+                    <ul>
+                        <li>
+                            Having 1:1 NAT grants the ability to access the various services on a host machine 
+                            instead of the VMs.
+                        </li>
+                        <li>
+                            Ex: 172.16.187.0/24 would translate to 192.168.1.0/24, so 172.16.187.23 is 
+                            192.168.1.23.
+                        </li>
+                    </ul>
+                    <div class="mt-25"></div>
+                    <p style="margin-bottom: 0px;">Set up 1:1 NAT:</p>
+                    <ol style="margin-bottom: 0px;">
+                        <li>On the host machine, open a browser and enter the pfSense's WAN IP address</li>
+                        <li>Login with the credentials <code>admin : pfsense</code></li>
+                        <li>Create a 1:1 NAT rule:</li>
+                        <ol>
+                            <li>Navigate to <code>Firewall > NAT > 1:1</code></li>
+                            <li>Change External Subnet IP to WAN Address</li>
+                            <li>Change Internal IP to LAN net</li>
+                            <li>Save and apply the changes</li>
+                        </ol>
+                        <img src="images/1-1-nat-rule.png" alt="1:1 NAT rule configuration.">
+                        <li>Configure a virtual IP:</li>
+                        <ol>
+                            <li>Navigate to <code>Firewall > Virtual IP</code></li>
+                            <li>IP type: Proxy ARP</li>
+                            <li>Interface: WAN</li>
+                            <li>Address type: Network</li>
+                            <li>Address(es): 172.16.xxx.0/24</li>
+                            <p style="margin-bottom: 0px;"><i>
+                                Note: Here, the subnet is /24 and not /16 because the only octets that 
+                                are translated are the first three (network ID), and the last octet 
+                                (host ID) needs to remain the same across the translation. /16 is for 
+                                setting up the IP and making sure it's on the same subnet as the SDC router.
+                            </i></p>
+                            <li>Save and apply the changes</li>
+                        </ol>
+                        <img src="images/1-1-nat-vip.png" alt="1:1 NAT Virtual IP configuration.">
+                        <p><i>Note: Replace 241 with xxx.</i></p>
+                    </ol>
+                </section>
+                <section id="windows">
+                    <h5>Windows</h5>
+                    <p>The network configuration is the same for all of the Windows machines.</p>
+                    <div class="mt-25"></div>
+                    <p style="margin-bottom: 0px;">Change the IP address of a Windows machine:</p>
+                    <ol>
+                        <li>Run <code>Win + R</code> and enter <code>ncpa.cpl</code> or navigate to 
+                            <code>Control Panel > Network and Internet > Network and Sharing Center</code>
+                        </li>
+                        <li>Select <code>Ethernet > Properties > IPv4 > Properties</code></li>
+                        <li>Select Use the following IP Address and fill out the information:</li>
+                        <ol>
+                            <li>IP Address: 192.168.1.x</li>
+                            <li>Subnet Mask: 255.255.255.0 (automatically fills out when clicked)</li>
+                            <li>Default Gateway: 192.168.1.1 (router's LAN IP address)</li>
+                            <li>Preferred DNS server : 8.8.8.8 (Google's Public DNS)</li>
+                        </ol>
+                        <li>Select OK</li>
+                        <img src="images/windows-networking.png" style="margin-bottom: 10px;" alt="Windows network configuration.">
+                    </ol>
+                </section>
+                <section id="linux">
+                    <h5>Linux</h5>
+                    <p>
+                        Unlike Windows, the Linux machines have their IPs configured differently, 
+                        although there are some similarities between the configurations.
+                    </p>
+                    <div class="mt-25"></div>
+                    <p><i>
+                        Note: XX in ensXX is the interface number, and can be found by running 
+                        <code>ip a</code>.
+                    </i></p>
+                    <h6>Ubuntu 22.04</h6>
+                    <p style="margin-bottom: 0px;">Change the IP:</p>
+                    <ol>
+                        <li>Edit the <code>/etc/netplan/xxx-network-manager-all.yaml</code> file</li>
+                        <p style="margin-bottom: 0px;"><i>Note: xxx is a number.</i></p>
+                        <li>Change the configuration to the following:</li>
+                        <pre><!-- ignore
+                          -->network:
+<!-- ignore               -->    version: 2
+<!-- ignore               -->        renderer: networkd
+<!-- ignore               -->        ethernets:
+<!-- ignore               -->            ensXX:
+<!-- ignore               -->                addresses:
+<!-- ignore               -->                  - 192.168.1.7/24
+<!-- ignore               -->                routes:
+<!-- ignore               -->                  - to: default
+<!-- ignore               -->                    via: 192.168.1.1
+<!-- ignore               -->                nameservers:
+<!-- ignore               -->                  addresses: [8.8.8.8]<!-- ignore
+                    --></pre>
+                        <li>
+                            Edit the <code>/etc/netplan/xx-installer-config.yaml</code> file and 
+                            change DHCP4 to false
+                        </li>
+                        <li>Run one of the following commands to apply the new configuration:</li>
+                        <pre><!-- ignore
+                         -->netplan apply
+<!-- ignore              -->systemctl restart systemd-networkd<!-- ignore
+                     --></pre>
+                    </ol>
+                    <h6>CentOS 7</h6>
+                    <p style="margin-bottom: 0px;">Change the IP:</p>
+                    <ol>
+                        <li>Edit the <code>/etc/sysconfig/network-scripts/ifcfg-ensXX</code> file</li>
+                        <li>Change the configuration to the following:</li>
+                        <pre><!-- ignore 
+                         -->TYPE=Ethernet
+<!-- ignore              -->PROXY_METHOD=none
+<!-- ignore              -->BROWSER_ONLY=no
+<!-- ignore              -->BOOTPROTO=static
+<!-- ignore              -->DEFROUTE=yes
+<!-- ignore              -->IPV4_FAILURE_FATAL=no
+<!-- ignore              -->IPV6INIT=yes
+<!-- ignore              -->IPV6_AUTOCONF=yes
+<!-- ignore              -->IPV6_DEFROUTE=yes
+<!-- ignore              -->IPV6_FAILURE_FATAL=no
+<!-- ignore              -->IPV6_ADDR_GEN_MODE=stable-privacy
+<!-- ignore              -->NAME=ensXXX
+<!-- ignore              -->UUID=20917e75-ac6f-42c1-8a1c-cb0af2f01a9b
+<!-- ignore              -->DEVICE=ensXXX
+<!-- ignore              -->ONBOOT=yes
+<!-- ignore              -->IPADDR=192.168.1.8
+<!-- ignore              -->NETMASK=255.255.255.0
+<!-- ignore              -->GATEWAY=192.168.1.1<!-- ignore
+                     --></pre>
+                        <li>Run the following command to apply the new configuration:</li>
+                        <pre><!-- ignore
+                         -->systemctl restart network<!-- ignore
+                     --></pre>
+                    </ol>
+                    <h6>Debian 11</h6>
+                    <p style="margin-bottom: 0px;">Change the IP:</p>
+                    <ol>
+                        <li>Edit the <code>/etc/network/interfaces</code> file</li>
+                        <li>Change the configuration to the following:</li>
+                        <pre><!-- ignore
+                         -->auto lo
+<!-- ignore              -->iface lo inet loopback
+
+<!-- ignore              -->auto ensXX
+<!-- ignore              -->iface ensXX inet static
+<!-- ignore              -->    address 192.168.1.9
+<!-- ignore              -->    netmask 255.255.255.0
+<!-- ignore              -->    gateway 192.168.1.1<!-- ignore
+                     --></pre>
+                        <li>Run the following command to apply the new configuration:</li>
+                        <pre><!-- ignore
+                         -->systemctl restart network<!-- ignore
+                     --></pre>
+                    </ol>
+                    <h6>Ubuntu 18</h6>
+                    <p style="margin-bottom: 0px;">Change the IP:</p>
+                    <ol>
+                        <li>Edit the <code>/etc/netplan/xx-network-manager-all.yaml</code> file</li>
+                        <li>Change the configuration to the following:</li>
+                        <pre><!-- ignore
+                          -->network:
+<!-- ignore               -->    version: 2
+<!-- ignore               -->        renderer: networkd
+<!-- ignore               -->        ethernets:
+<!-- ignore               -->            ensXX:
+<!-- ignore               -->                addresses:
+<!-- ignore               -->                  - 192.168.1.10/24
+<!-- ignore               -->                nameservers:
+<!-- ignore               -->                  addresses: [8.8.8.8]
+<!-- ignore               -->                gateway4: 192.168.1.1<!-- ignore
+                    --></pre>
+                        <li>Run the following command to apply the new configuration:</li>
+                        <pre><!-- ignore
+                         -->systemctl restart network<!-- ignore
+                     --></pre>
+                    </ol>
+                </section>
+                <section id="active-directory">
+                    <h4>Active Directory</h4>
+                    <p style="margin-bottom: 0px;">
+                        <b>Active Directory (AD):</b> A giant database and central management 
+                        for domain users, computers, and services.<br>
+                        There are two main components of AD: LDAP and DNS
+                    </p>
+                    <ul style="margin-bottom: 0px;">
+                        <li>
+                            <b>LDAP:</b> Lightweight Directory Access Protocol - it puts 
+                            the directory in active directory.
+                        </li>
+                        <li>
+                            <b>DNS:</b> Domain Name System - allows LDAP to reference 
+                            names in its directory.
+                        </li>
+                    </ul>
+                    <p style="margin-bottom: 0px;">In Evan's Lab:</p>
+                    <ul>
+                        <li>Windows Server 2022: Primary domain controller (DC) and DNS server</li>
+                        <li>Windows Server 2012 R2: Secondary DC and DNS server</li>
+                    </ul>
+                </section>
+                <section id="domain-controllers">
+                    <h5>Domain Controllers</h5>
+                    <p>
+                        There are two parts of setting up domain controllers: installing Active 
+                        Directory Domain Services, which is the same for both DCs, and promoting 
+                        the device to a DC.
+                    </p>
+                    <h6>Windows Server 2022: Primary DC</h6>
+                    <p>
+                        DNS settings: change the DNS to 127.0.0.1 (localhost)<br>
+                        <b>Localhost:</b> the hostname of the machine (refers to itself).
+                    </p>
+                    <div class="mt-25"></div>
+                    <p style="margin-bottom: 0px;">Install AD:</p>
+                    <ol>
+                        <li>
+                            Navigate to <code>Server Manager > Manage > Add Roles and Features</code> 
+                            or<br>
+                            <code>Control Panel > Programs > Programs and Features > Turn Windows 
+                            Features On or Off</code>
+                        </li>
+                        <li>Make the following selections and click next for other options:</li>
+                        <ol>
+                            <li>Installation Type: Role-Based</li>
+                            <li>Server Roles: Active Directory Domain Services</li>
+                        </ol>
+                        <li>Install</li>
+                        <li>Rename the device using PowerShell:</li>
+                        <pre>Rename-Computer -NewName [name] -restart</pre>
+                        <p><i>
+                            Note: The machines in the network will be given names with the form: SERVICE0X.<br>
+                            Ex: The DCs will be named DC01 and DC02, respectively.
+                        </i></p>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Create a primary DC:</p>
+                    <ol>
+                        <li>Navigate to <code>Server Manager > Flag > Promote to Domain Controller</code></li>
+                        <li>Make the following selections for the pop-up and click next for other options:</li>
+                        <ol>
+                            <li>Deployment Configuration: add a new forest and enter a domain name</li>
+                            <p style="margin-bottom: 0px;"><i>Note: Adding a new forest creates a new domain.</i></p>
+                            <li>Domain name: Enter a FQDN</li>
+                            <p style="margin-bottom: 0px;"><i>
+                                <b>FQDN:</b> Fully Qualified Domain Name<br>
+                                Ex: ejuan.detergent
+                            </i></p>
+                            <li>Domain Controller Options: Set the functional level and password</li>
+                            <p style="margin-bottom: 0px;"><i>
+                                <b>Functional Level:</b> Oldest version of Windows that any domain 
+                                controller has; in this case, it would be Windows Server 2012 R2.
+                            </i></p>
+                            <li>
+                                Password: To make things easier, the password will be the same as the 
+                                one set for the device
+                            </li>
+                            <li>Additional Options: ensure the domain is correct; it's one capitalized word</li>
+                            <p style="margin-bottom: 0px;"><i>Ex: EJUAN</i></p>
+                            <li>Prerequisites Check: Install</li>
+                        </ol>
+                        <li>Wait for the machine to restart</li>
+                    </ol>
+                </section>
+                <section id="domain-joining">
+                    <h5>Domain Joining</h5>
+                    <p>
+                        To join the other machines to the AD, the DNS settings must point to the DNS 
+                        servers, allowing the Domain to be discovered and joined.
+                    </p>
+                    <h6>Changing DNS Settings</h6>
+                    <p>
+                        The DNS settings must be changed so that the primary DNS points to the primary 
+                        DC's IP, and the secondary DNS points to the secondary DC's IP.
+                    </p>
+                    <p>
+                        <b style="color: #73822e;">Windows</b><br>
+                        Set the DNS the same way the IP addresses were configured.
+                    </p>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color: #73822e;">Ubuntu 22 & 18</b><br>
+                        Set the DNS settings with the network file:</p>
+                    <ol>
+                        <li>
+                            In the <code>/etc/netplan/xx-network-manager-all.yaml</code> 
+                            file replace 8.8.8.8:
+                        </li>
+                        <pre><!-- ignore
+                         -->nameservers:
+<!-- ignore              -->    addresses: [192.168.1.2,192.168.1.4]<!-- ignore
+                    --></pre>
+                        <li>Apply the network changes:</li>
+                        <pre>netplan apply</pre>
+                    </ol>
+                    <div class="mt-25"></div>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color: #73822e;">CentOS 7</b><br>
+                        Set the DNS settings with the network file:
+                    </p>
+                    <ol>
+                        <li>Add to the <code>/etc/sysconfig/network-scripts/ifcfg-ensXX</code> file:</li>
+                        <pre><!-- ignore
+                         -->DNS1=[192.168.1.2]
+<!-- ignore              -->DNS2=[192.168.1.4]<!-- ignore
+                     --></pre>
+                        <li>Apply the network changes:</li>
+                        <pre>systemctl restart network</pre>
+                    </ol>
+                    <div class="mt-25"></div>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color: #73822e;">Debian 11</b><br>
+                        Set the DNS settings with the GUI:
+                    </p>
+                    <ol>
+                        <li>Navigate to <code>Settings > Network > Wired Settings > IPv4</code></li>
+                        <li>In the DNS section, deselect <code>Automatic</code> and enter the DNS servers' IPs</li>
+                        <li>Apply the changes by toggling the wired connection</li>
+                    </ol>
+                    <h6>Joining the Domain</h6>
+                    <p>
+                        Domain joining is fairly simple. The machine's hostname will be changed 
+                        as good practice, so the machine can be easily identified on the network, 
+                        then it will find and join the domain.
+                    </p>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color: #73822e;">Windows 7</b><br>
+                        Rename the computer and add to the domain:
+                    </p>
+                    <ol>
+                        <li>Navigate to <code>Start > Run > sysdm.cpl > Computer Name > Change</code></li>
+                        <ol>
+                            <li>Change the computer's name</li>
+                            <li>Member of: Domain</li>
+                            <li>Enter the FQDN</li>
+                            <li>Enter the administrator credentials</li>
+                        </ol>
+                        <li>Wait for the restart</li>
+                    </ol>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color: #73822e;">Other Windows</b><br>
+                        Rename the computer and add to the domain in PowerShell:
+                    </p>
+                    <ol>
+                        <li>Rename the computer:</li>
+                        <ol>
+                            <li>Run the following command:</li>
+                            <pre>Rename-Computer -NewName [name] -restart</pre>
+                        </ol>
+                        <li>Add the computer to the domain:</li>
+                        <ol>
+                            <li>Run the following command:</li>
+                            <pre>Add-Computer -DomainName [FQDN] -Restart</pre>
+                            <li>Enter the domain administrator credentials</li>
+                        </ol>
+                        <li>Wait for the restart</li>
+                    </ol>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color: #73822e;">Ubuntu 22</b><br>
+                        Rename the computer:
+                    </p>
+                    <ol>
+                        <li>Run the following command:</li>
+                        <pre>hostnamectl set-hostname [name]</pre>
+                        <li>Run <code>exit</code> until the login screen and login again</li>
+                    </ol>
+                    <p style="margin-bottom: 0px;">
+                        Add the computer to the domain:<br>
+                        <i>Note: This is the same for all Linux machines, but the 
+                        required packages are different.</i>
+                    </p>
+                    <ol>
+                        <li>Discover the domain:</li>
+                        <pre>realm discover [FQDN]</pre>
+                        <p style="margin-bottom: 0px;">
+                            <i>Note: The <code>realmd</code> package will need to be installed 
+                            if it isn't already.</i>
+                        </p>
+                        <li>Join the domain:</li>
+                        <pre>realm join [FQDN]</pre>
+                        <li>Edit the <code>/etc/pam.d/common-session</code> file and add the following lines:</li>
+                        <pre>session optional pam_mkhomedir.so skel=/etc/skel umask=077</pre>
+                        <li>
+                            Authenticate to check if the machine was machine joined by signing 
+                            in as Administrator@[FQDN]
+                        </li>
+                    </ol>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color: #73822e;">Ubuntu 18 and CentOS 7</b><br>
+                        Rename the computer:
+                    </p>
+                    <ol>
+                        <li>Run the following command:</li>
+                        <pre>hostnamectl set-hostname [new name]</pre>
+                        <li>
+                            Edit the <code>/etc/hosts</code> file, and replace the 
+                            old hostname with the new one
+                        </li>
+                        <li>Reboot the machine:</li>
+                        <pre>reboot</pre>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Add the computer to the domain:</p>
+                    <ol>
+                        <li>Search, realm join , and authenticate like in Ubuntu 22</li>
+                        <p style="margin-bottom: 0px;"><i>
+                            Note: The <code>realmd</code>, <code>packagekit</code> (Ubuntu 22),
+                            and <code>PackageKit</code> (CentOS 7) packages will need to be 
+                            installed if they aren't already.
+                        </i></p>
+                    </ol>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color: #73822e;">Debian 11</b><br>
+                        Rename the computer like with Ubuntu 18.
+                    </p>
+                    <p style="margin-bottom: 0px;">
+                        Add the computer to the domain:
+                    </p>
+                    <ol>
+                        <li>Edit the <code>/etc/resolv.conf</code> file:</li>
+                        <pre><!-- ignore
+                         -->domain [FQDN]
+<!-- ignore              -->search [FQDN]<!-- ignore
+                     --></pre>
+                        <li>Search and realm join like in Ubuntu 22</li>
+                        <p style="margin-bottom: 0px;"><i>
+                            Note: The <code>realmd</code> and <code>sssd</code> packages will need to be 
+                            installed if they aren't already.
+                        </i></p>
+                        <li>Edit the `/etc/pam.d/common-session` file if needed by adding:</li>
+                        <pre>session optional        pam_mkhomedir.so skel=/etc/skel umask=077</pre>
+                        <li>Authenticate</li>
+                    </ol>
+                </section>
+                <section id="services">
+                    <h4>Services</h4>
+                    <p>
+                        <b>Service:</b> Applications, protocols, and software that run on infrastructure 
+                        and allows for communication and data sharing across a network.<br>
+                        <i>
+                            Note: The root and local Administrator accounts were used, not 
+                            authenticated the Administrator@[FQDN] account.
+                        </i>
+                    </p>
+                </section>
+                <section id="mysql">
+                    <h5>MySQL</h5>
+                    <p>
+                        Machine: Ubuntu 22<br>
+                        Purpose: MySQL database for XAMPP and Apache<br>
+                        <i>Note: <code>mysql_native_password</code> is now deprecated.</i>
+                    </p>
+                    <p style="margin-bottom: 0px;">Install MySQL:</p>
+                    <ol>
+                        <li>Update and upgrade:</li>
+                        <pre>apt update && apt upgrade -y</pre>
+                        <li>Install the MySQL server and validate the installation:</li>
+                        <pre><!-- ignore
+                         -->apt install mysql-server -y
+<!-- ignore              -->mysqld --version<!-- ignore
+                     --></pre>
+                        <li>Check the status of the service and start if needed:</li>
+                        <pre><!-- ignore
+                         -->service mysql status
+<!-- ignore              -->service mysql start<!-- ignore
+                     --></pre>
+                        <li>Run the MySQL secure installation and answer the prompts as such:</li>
+                        <pre><!-- ignore
+                         -->mysql_secure_installation
+
+<!-- ignore              -->validate password strength: y
+<!-- ignore              -->levels: 2
+<!-- ignore              -->change root password: y (can use same password)
+<!-- ignore              -->continue with password: y
+<!-- ignore              -->remove anonymous use: y
+<!-- ignore              -->disallow root login remotely: y
+<!-- ignore              -->remove test database: y
+<!-- ignore              -->reload privilege tables: y<!-- ignore
+                     --></pre>
+                        <li>Restart MySQL:</li>
+                        <pre>service mysql restart</pre>
+                        <li>Login to the MySQL server:</li>
+                        <pre>mysql -u root -p</pre>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Allow remote connections:</p>
+                    <ol>
+                        <li>Edit the <code>/etc/mysql/mysqld.cnf</code> file:</li>
+                        <pre>bind-address          0.0.0.0</pre>
+                    </ol>
+                    <p>
+                        Each website needs their own database and database user so the 
+                        websites are able to have their data isolated. Separated users 
+                        adds a layer of security, allowing further separation between 
+                        the websites.
+                    </p>
+                    <p style="margin-bottom: 0px;">Set up users and databases:</p>
+                    <ol>
+                        <li>Create user:</li>
+                        <pre><!-- ignore
+                         -->CREATE USER '[user]'@'%' IDENTIFIED WITH mysql_native_password BY '[password]';
+<!-- ignore              -->flush privileges;<!-- ignore
+                     --></pre>
+                        <li>Create database:</li>
+                        <pre>create database [database];</pre>
+                        <li>Grant database privileges to user:</li>
+                        <pre>grant all privileges on [database].* to '[user]'@'%';</pre>
+                        <li>Repeat for another user</li>
+                    </ol>
+                </section>
+                <section id="xampp-web-server">
+                    <h5>XAMPP Web Server</h5>
+                    <p>
+                        Machine: Windows Server 2016<br>
+                        Purpose: Hosts a WordPress website
+                    </p>
+                    <div class="mt-25"></div>
+                    <p style="margin-bottom: 0px;">Download and install XAMPP:</p>
+                    <ol>
+                        <li>In the browser, navigate to https://www.apachefriends.org/</li>
+                        <li>Download XAMPP for Windows</li>
+                        <li>Once the download is done, open the .exe file, and a setup wizard appears</li>
+                        <li>Make the following selection:</li>
+                        <ol>
+                            <li>Select Components: Required Components (grayed out), MySQL, and phpMyAdmin</li>
+                        </ol>
+                        <li>Click finish to complete the setup</li>
+                    </ol>
+                </section>
+                <section id="apache-web-server">
+                    <h5>Apache Web Server</h5>
+                    <p>Words</p>
+                </section>
+                <section id="nginx-web-proxy">
+                    <h5>NGINX Web Proxy</h5>
+                    <p>Words</p>
+                </section>
+                <section id="smb">
+                    <h5>SMB</h5>
+                    <p>Words</p>
+                </section>
+                <section id="sftp">
+                    <h5>SFTP</h5>
+                    <p>Words</p>
+                </section>
+                <section id="security-considerations">
+                    <h4>Security Considerations</h4>
+                    <p>Words</p>
+                </section>
+                <section id="proprietary-data">
+                    <h5>Proprietary Data</h5>
+                    <p>Words</p>
+                </section>
+                <section id="hr-data">
+                    <h5>HR Data</h5>
+                    <p>Words</p>
+                </section>
+                <section id="iis-server">
+                    <h5>IIS Server</h5>
+                    <p>Words</p>
+                </section>
+                <section id="nsas-beast">
+                    <h5>NSA's Beast</h5>
+                    <p>Words</p>
+                </section>
+                <section id="wordpress-creds">
+                    <h5>WordPress Creds</h5>
+                    <p>Words</p>
+                </section>
+                <section id="pci-dss">
+                    <h5>PCI DSS</h5>
+                    <p>Words</p>
+                </section>
+            </div>
+            <div class="section-padding"></div>
+            <!-- Article Content Ends Here -->
+
+            <!-- TOC Starts Here -->
+            <aside class="toc">
+                <ul class="list-unstyled">
+                    <li class="toc-h1">
+                        <a href="#network-configuration">Network Configuration</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#pfsense">pfSense</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#windows">Windows</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#linux">Linux</a>
+                    </li>
+                    <li class="toc-h1">
+                        <a href="#active-directory">Active Directory</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#domain-controllers">Domain Controllers</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#domain-joining">Domain Joining</a>
+                    </li>
+                    <li class="toc-h1">
+                        <a href="#services">Services</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#mysql">MySQL</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#xampp-web-server">XAMPP Web Server</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#apache-web-server">Apache Web Server</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#nginx-web-proxy">NGINX Web Proxy</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#smb">SMB</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#sftp">SFTP</a>
+                    </li>
+                    <li class="toc-h1">
+                        <a href="#security-considerations">Security Considerations</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#proprietary-data">Proprietary Data</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#hr-data">HR Data</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#iis-server">IIS Server</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#nsas-beast">NSA's Beast</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#wordpress-creds">WordPress Creds</a>
+                    </li>
+                    <li class="toc-h2">
+                        <a href="#pci-dss">PCI DSS</a>
+                    </li>
+                </ul>
+            </aside>
+            <!-- TOC Ends Here -->
+        </main>
+     </div>
+    <!-- Article Ends Here -->
+
+    <!-- Footer Starts Here -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-lg-between">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-info">
+                        <a href="index.html">
+                            <img src="../dist/images/logo.svg" width="120" height="120">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-2 footer-empty">
+                    <div class="footer-wizard">
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 footer-empty">
+                    <div class="footer-wizard">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-wizard">
+                        <h5>Contact</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="mailto:tran.bn.natalie@gmail.com">tran.bn.natalie@gmail.com</a></li>
+                            <li><a href="https://www.linkedin.com/in/natalie-bn-tran/">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="copy-right">
+                <p>@ 2026 - Natalie Tran</p>
+                <p>Designed & Develop by <a href="https://zakirsoft.com/">Zakirsoft</a></p>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Ends Here -->
+
+    <!-- jQuery JS Link -->
+    <script src="../dist/js/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS Link -->
+    <script src="../dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu JS Link -->
+    <script src="../dist/js/menu.js"></script>
+
+    <!-- Custom JS Link -->
+    <script src="../dist/js/main.js"></script>
+    <script src="../dist/js/toc.js"></script>
+</body>
+
+</html>
