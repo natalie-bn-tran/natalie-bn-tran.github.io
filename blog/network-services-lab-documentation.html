@@ -70,7 +70,6 @@
                         network settings.<br>
                         <b>IP Address:</b> A unique identifier for a device on a network.
                     </p>
-                    <div class="mt-25"></div>
                     <p>
                         To make things easier, the LAN subnet will be same as the one automatically 
                         set in the pfSense router (192.168.1.0/24), and the last octets of the 
@@ -153,18 +152,20 @@
                             </tr>
                         </tbody>
                     </table>
+                    <p><i>
+                        Note: These were the IPs used in the lab environment. They can be changed as wanted.
+                    </i></p>
                 </section>
                 <section id="pfsense">
                     <h5>pfSense</h5>
                     <p>
                         WAN: It's set with DHCP, but it's recommended to set it statically.<br>
-                        LAN: This can be kept to the default IP address, but can be changed as well.
+                        LAN: This can be kept to the default IP address but can be changed as well.
                     </p>
-                    <div class="mt-25"></div>
                     <p style="margin-bottom: 0px;">Change the IP address of a pfSense router, using the CLI:</p>
                     <ol>
-                        <li>Enter 2</li>
-                        <li>Enter 1 or 2, depending on if the WAN or LAN is being changed</li>
+                        <li>Enter <code>2</code></li>
+                        <li>Enter <code>1</code> or <code>2</code>, depending on if the WAN or LAN is being changed</li>
                         <li>Enter the new IP address in this format: xxx.xxx.xxx.xxx/yy</li>
                         <ul class="list-unstyled">
                             <li><i>Note: xxx.xxx.xxx.xxx is the IP address, and /yy is the subnet 
@@ -174,18 +175,17 @@
                             <li><i>For WAN: yy = 16</i></li>
                             <li><i>For LAN: yy = 24</i></li>
                         </ul>
-                        <li>For WAN: the default gateway is 172.16.0.1, and enter y when 
+                        <li>For WAN: the default gateway is 172.16.0.1, and enter <code>y</code> when 
                             prompted if this should be the default upstream gateway
                         </li>
                         <ul class="list-unstyled">
-                            <li><i>Note: This only applies for if you're using the SDC 
-                                infrastructure. 172.16.0.1 is the IP address of  the SDC's router 
+                            <li><i>Note: This is only applicable if the SDC infrastructure is being used. 
+                                172.16.0.1 is the IP address of  the SDC's router 
                                 and  will allow the VMs to have Internet access.
                             </i></li>
                         </ul>
-                        <li>Enter n or hit enter for the rest of the options</li>
+                        <li>Enter <code>n</code> or hit <code>Enter</code> for the rest of the options</li>
                     </ol>
-                    <div class="mt-25"></div>
                     <p style="margin-bottom: 0px;">
                         For the lab, it is recommended to have 1:1 NAT set up on the router to 
                         have the ability to work from the host machine.<br>
@@ -202,57 +202,69 @@
                             192.168.1.23.
                         </li>
                     </ul>
-                    <div class="mt-25"></div>
                     <p style="margin-bottom: 0px;">Set up 1:1 NAT:</p>
                     <ol style="margin-bottom: 0px;">
                         <li>On the host machine, open a browser and enter the pfSense's WAN IP address</li>
                         <li>Login with the credentials <code>admin : pfsense</code></li>
-                        <li>Create a 1:1 NAT rule:</li>
+                        <li>Create a 1:1 NAT firewall rule:</li>
                         <ol>
                             <li>Navigate to <code>Firewall > NAT > 1:1</code></li>
-                            <li>Change External Subnet IP to WAN Address</li>
-                            <li>Change Internal IP to LAN net</li>
+                            <li>Make the following selections:</li>
+                            <ol>
+                                <li>Interface: WAN</li>
+                                <li>Address Family: IPv4</li>
+                                <li>External subnet IP: WAN Address</li>
+                                <li>Internal IP: LAN subnet</li>
+                                <li>Destination: Any</li>
+                                <li>NAT reflection: Use system default</li>
+                            </ol>
                             <li>Save and apply the changes</li>
                         </ol>
                         <img src="images/1-1-nat-rule.png" alt="1:1 NAT rule configuration.">
                         <li>Configure a virtual IP:</li>
                         <ol>
                             <li>Navigate to <code>Firewall > Virtual IP</code></li>
-                            <li>IP type: Proxy ARP</li>
-                            <li>Interface: WAN</li>
-                            <li>Address type: Network</li>
-                            <li>Address(es): 172.16.xxx.0/24</li>
-                            <p style="margin-bottom: 0px;"><i>
-                                Note: Here, the subnet is /24 and not /16 because the only octets that 
-                                are translated are the first three (network ID), and the last octet 
-                                (host ID) needs to remain the same across the translation. /16 is for 
-                                setting up the IP and making sure it's on the same subnet as the SDC router.
-                            </i></p>
+                            <li>Make the following selections:</li>
+                            <ol>
+                                <li>Type: Proxy ARP</li>
+                                <li>Interface: WAN</li>
+                                <li>Address type: Network</li>
+                                <li>Address(es): 172.16.xxx.0/24</li>
+                                <p style="margin-bottom: 0px;"><i>
+                                    Note: Here, the subnet is /24 and not /16 because the only octets that 
+                                    are translated are the first three (network ID), and the last octet 
+                                    (host ID) needs to remain the same across the translation. /16 is for 
+                                    setting up the IP and making sure it's on the same subnet as the SDC router.
+                                </i></p>
+                            </ol>
                             <li>Save and apply the changes</li>
                         </ol>
                         <img src="images/1-1-nat-vip.png" alt="1:1 NAT Virtual IP configuration.">
-                        <p><i>Note: Replace 241 with xxx.</i></p>
+                        <p><i>Note: Replace 241 with the third octet of the WAN IP address.</i></p>
                     </ol>
                 </section>
                 <section id="windows">
                     <h5>Windows</h5>
                     <p>The network configuration is the same for all of the Windows machines.</p>
-                    <div class="mt-25"></div>
                     <p style="margin-bottom: 0px;">Change the IP address of a Windows machine:</p>
                     <ol>
-                        <li>Run <code>Win + R</code> and enter <code>ncpa.cpl</code> or navigate to 
+                        <li>Run <code>Win + R</code> and enter <code>ncpa.cpl</code> or navigate to <br>
                             <code>Control Panel > Network and Internet > Network and Sharing Center</code>
                         </li>
                         <li>Select <code>Ethernet > Properties > IPv4 > Properties</code></li>
-                        <li>Select Use the following IP Address and fill out the information:</li>
+                        <li>Select <code>Use the following IP Address</code> and fill out the information:</li>
                         <ol>
                             <li>IP Address: 192.168.1.x</li>
                             <li>Subnet Mask: 255.255.255.0 (automatically fills out when clicked)</li>
-                            <li>Default Gateway: 192.168.1.1 (router's LAN IP address)</li>
+                            <li>Default Gateway: {Router LAN IP}</li>
                             <li>Preferred DNS server : 8.8.8.8 (Google's Public DNS)</li>
                         </ol>
-                        <li>Select OK</li>
+                        <li>Select <code>OK</code> to apply the changes</li>
                         <img src="images/windows-networking.png" style="margin-bottom: 10px;" alt="Windows network configuration.">
+                        <p><i>
+                            Note: Replace 192.168.1.5 with the appropriate IP address for each Windows machine
+                            and 192.168.1.1 with {Router LAN IP}.
+                        </i></p>
                     </ol>
                 </section>
                 <section id="linux">
@@ -261,7 +273,6 @@
                         Unlike Windows, the Linux machines have their IPs configured differently, 
                         although there are some similarities between the configurations.
                     </p>
-                    <div class="mt-25"></div>
                     <p><i>
                         Note: XX in ensXX is the interface number, and can be found by running 
                         <code>ip a</code>.
@@ -279,10 +290,10 @@
 <!-- ignore               -->        ethernets:
 <!-- ignore               -->            ensXX:
 <!-- ignore               -->                addresses:
-<!-- ignore               -->                  - 192.168.1.7/24
+<!-- ignore               -->                  - {Ubuntu 22 IP}/24
 <!-- ignore               -->                routes:
 <!-- ignore               -->                  - to: default
-<!-- ignore               -->                    via: 192.168.1.1
+<!-- ignore               -->                    via: {Router LAN IP}
 <!-- ignore               -->                nameservers:
 <!-- ignore               -->                  addresses: [8.8.8.8]<!-- ignore
                     --></pre>
@@ -317,9 +328,9 @@
 <!-- ignore              -->UUID=20917e75-ac6f-42c1-8a1c-cb0af2f01a9b
 <!-- ignore              -->DEVICE=ensXXX
 <!-- ignore              -->ONBOOT=yes
-<!-- ignore              -->IPADDR=192.168.1.8
+<!-- ignore              -->IPADDR={CentOS 7 IP}
 <!-- ignore              -->NETMASK=255.255.255.0
-<!-- ignore              -->GATEWAY=192.168.1.1<!-- ignore
+<!-- ignore              -->GATEWAY={Router LAN IP}<!-- ignore
                      --></pre>
                         <li>Run the following command to apply the new configuration:</li>
                         <pre><!-- ignore
@@ -337,9 +348,9 @@
 
 <!-- ignore              -->auto ensXX
 <!-- ignore              -->iface ensXX inet static
-<!-- ignore              -->    address 192.168.1.9
+<!-- ignore              -->    address {Debian 11 IP}
 <!-- ignore              -->    netmask 255.255.255.0
-<!-- ignore              -->    gateway 192.168.1.1<!-- ignore
+<!-- ignore              -->    gateway {Router LAN IP}<!-- ignore
                      --></pre>
                         <li>Run the following command to apply the new configuration:</li>
                         <pre><!-- ignore
@@ -358,10 +369,10 @@
 <!-- ignore               -->        ethernets:
 <!-- ignore               -->            ensXX:
 <!-- ignore               -->                addresses:
-<!-- ignore               -->                  - 192.168.1.10/24
+<!-- ignore               -->                  - {Ubuntu 18 IP}/24
 <!-- ignore               -->                nameservers:
 <!-- ignore               -->                  addresses: [8.8.8.8]
-<!-- ignore               -->                gateway4: 192.168.1.1<!-- ignore
+<!-- ignore               -->                gateway4: {Router LAN IP}<!-- ignore
                     --></pre>
                         <li>Run the following command to apply the new configuration:</li>
                         <pre><!-- ignore
@@ -371,21 +382,15 @@
                 </section>
                 <section id="active-directory">
                     <h4>Active Directory</h4>
-                    <p style="margin-bottom: 0px;">
+                    <p>
                         <b>Active Directory (AD):</b> A giant database and central management 
                         for domain users, computers, and services.<br>
-                        There are two main components of AD: LDAP and DNS
+                        There are two main components of AD: LDAP and DNS.<br>
+                        <b>LDAP:</b> Lightweight Directory Access Protocol - it puts 
+                        the directory in Active Directory.<br>
+                        <b>DNS:</b> Domain Name System - allows LDAP to reference 
+                        names in its directory.
                     </p>
-                    <ul style="margin-bottom: 0px;">
-                        <li>
-                            <b>LDAP:</b> Lightweight Directory Access Protocol - it puts 
-                            the directory in active directory.
-                        </li>
-                        <li>
-                            <b>DNS:</b> Domain Name System - allows LDAP to reference 
-                            names in its directory.
-                        </li>
-                    </ul>
                     <p style="margin-bottom: 0px;">In Evan's Lab:</p>
                     <ul>
                         <li>Windows Server 2022: Primary domain controller (DC) and DNS server</li>
@@ -401,10 +406,9 @@
                     </p>
                     <h6>Windows Server 2022: Primary DC</h6>
                     <p>
-                        DNS settings: change the DNS to 127.0.0.1 (localhost)<br>
-                        <b>Localhost:</b> the hostname of the machine (refers to itself).
+                        DNS settings: Change the DNS to 127.0.0.1 (localhost).<br>
+                        <b>Localhost:</b> The hostname of the machine (refers to itself).
                     </p>
-                    <div class="mt-25"></div>
                     <p style="margin-bottom: 0px;">Install AD:</p>
                     <ol>
                         <li>
@@ -420,11 +424,7 @@
                         </ol>
                         <li>Install</li>
                         <li>Rename the device using PowerShell:</li>
-                        <pre>Rename-Computer -NewName [name] -restart</pre>
-                        <p><i>
-                            Note: The machines in the network will be given names with the form: SERVICE0X.<br>
-                            Ex: The DCs will be named DC01 and DC02, respectively.
-                        </i></p>
+                        <pre>Rename-Computer -NewName {name} -restart</pre>
                     </ol>
                     <p style="margin-bottom: 0px;">Create a primary DC:</p>
                     <ol>
@@ -435,7 +435,7 @@
                             <p style="margin-bottom: 0px;"><i>Note: Adding a new forest creates a new domain.</i></p>
                             <li>Domain name: Enter a FQDN</li>
                             <p style="margin-bottom: 0px;"><i>
-                                <b>FQDN:</b> Fully Qualified Domain Name<br>
+                                <b>FQDN:</b> Fully Qualified Domain Name.<br>
                                 Ex: ejuan.detergent
                             </i></p>
                             <li>Domain Controller Options: Set the functional level and password</li>
@@ -449,6 +449,56 @@
                             </li>
                             <li>Additional Options: ensure the domain is correct; it's one capitalized word</li>
                             <p style="margin-bottom: 0px;"><i>Ex: EJUAN</i></p>
+                            <li>Prerequisites Check: Install</li>
+                        </ol>
+                        <li>Wait for the machine to restart</li>
+                    </ol>
+                    <h6>Windows Server 2012 R2: Secondary DC</h6>
+                    <p style="margin-bottom: 0px;">DNS changes:</p>
+                    <ol>
+                        <li>Change the primary DNS server to the IP address of the primary DC</li>
+                        <p style="margin-bottom: 0px;"><i>
+                            Note: The Windows Server 2022 has the IP 192.168.1.2 and uses its 
+                            localhost (itself) for the DNS server.<br>
+	                        In order for the Windows Server 2012 R2 to access the records on the 
+                            domain, its preferred DNS server would be 192.168.1.2, which is where 
+                            the primary DNS server is located.<br>
+	                        If the preferred DNS server was set to localhost for the Windows 
+                            Server 2012 R2, it would try to access the domain's DNS records 
+                            by making requests to itself, but it does not have them.<br>
+                        </i></p>
+                        <li>Change the alternate DNS server to localhost</li>
+                        <p><i>
+                            Note: The Windows Server 2012 R2 has the secondary DNS server 
+                            in the case that the primary DC's DNS does not work; it will 
+                            be used as a backup.
+                        </i></p>
+                    </ol>
+                    <p>Install AD the same way as with the Primary DC, rename the device, and promote to a DC.</p>
+                    <p style="margin-bottom: 0px;">Create a Secondary DC:</p>
+                    <ol>
+                        <li>Make the following selections for the pop-up and click next for other options:</li>
+                        <ol>
+                            <li>
+                                Deployment Configuration: Add a domain controller to an existing domain, 
+                                enter the domain name, and enter the credentials
+                            </li>
+                            <li>After entering the domain name: click on its name and <code>OK</code></li>
+                            <li>Credentials: Enter the credentials of the Administrator account on the domain</li>
+                            <p style="margin-bottom: 0px;"><i>
+                                Note: The username is in the format DOMAIN\Administrator.<br>
+                                The password can be changed on the Primary DC if needed by navigating to <br>
+                                <code>Active Directory and Users > SLD.TLD > Users > right click Administrator > 
+                                Reset Password</code>
+                            </i></p>
+                            <li>
+                                Domain Controller Options: Add a password; everything else should be 
+                                set to default
+                            </li>
+                            <p style="margin-bottom: 0px;"><i>
+                                Note: Ensure DNS server and DC are selected.
+                            </i></p>
+                            <li>Additional Options > Replicate From: Domain Name</li>
                             <li>Prerequisites Check: Install</li>
                         </ol>
                         <li>Wait for the machine to restart</li>
@@ -479,12 +529,11 @@
                         </li>
                         <pre><!-- ignore
                          -->nameservers:
-<!-- ignore              -->    addresses: [192.168.1.2,192.168.1.4]<!-- ignore
+<!-- ignore              -->    addresses: [{Windows Server 2022 IP},{Windows Server 2012 R2 IP}]<!-- ignore
                     --></pre>
                         <li>Apply the network changes:</li>
                         <pre>netplan apply</pre>
                     </ol>
-                    <div class="mt-25"></div>
                     <p style="margin-bottom: 0px;">
                         <b style="color: #73822e;">CentOS 7</b><br>
                         Set the DNS settings with the network file:
@@ -492,13 +541,12 @@
                     <ol>
                         <li>Add to the <code>/etc/sysconfig/network-scripts/ifcfg-ensXX</code> file:</li>
                         <pre><!-- ignore
-                         -->DNS1=[192.168.1.2]
-<!-- ignore              -->DNS2=[192.168.1.4]<!-- ignore
+                         -->DNS1=[{Windows Server 2022 IP}]
+<!-- ignore              -->DNS2=[{Windows Server 2012 R2 IP}]<!-- ignore
                      --></pre>
                         <li>Apply the network changes:</li>
                         <pre>systemctl restart network</pre>
                     </ol>
-                    <div class="mt-25"></div>
                     <p style="margin-bottom: 0px;">
                         <b style="color: #73822e;">Debian 11</b><br>
                         Set the DNS settings with the GUI:
@@ -519,7 +567,8 @@
                         Rename the computer and add to the domain:
                     </p>
                     <ol>
-                        <li>Navigate to <code>Start > Run > sysdm.cpl > Computer Name > Change</code></li>
+                        <li>Run <code>Win + R</code> and enter <code>sysdm.cpl</code></li>
+                        <li>Navigate to <code>Computer Name > Change</code></li>
                         <ol>
                             <li>Change the computer's name</li>
                             <li>Member of: Domain</li>
@@ -536,12 +585,12 @@
                         <li>Rename the computer:</li>
                         <ol>
                             <li>Run the following command:</li>
-                            <pre>Rename-Computer -NewName [name] -restart</pre>
+                            <pre>Rename-Computer -NewName {name} -Restart</pre>
                         </ol>
                         <li>Add the computer to the domain:</li>
                         <ol>
                             <li>Run the following command:</li>
-                            <pre>Add-Computer -DomainName [FQDN] -Restart</pre>
+                            <pre>Add-Computer -DomainName {FQDN} -Restart</pre>
                             <li>Enter the domain administrator credentials</li>
                         </ol>
                         <li>Wait for the restart</li>
@@ -552,7 +601,7 @@
                     </p>
                     <ol>
                         <li>Run the following command:</li>
-                        <pre>hostnamectl set-hostname [name]</pre>
+                        <pre>hostnamectl set-hostname {name}</pre>
                         <li>Run <code>exit</code> until the login screen and login again</li>
                     </ol>
                     <p style="margin-bottom: 0px;">
@@ -562,18 +611,18 @@
                     </p>
                     <ol>
                         <li>Discover the domain:</li>
-                        <pre>realm discover [FQDN]</pre>
+                        <pre>realm discover {FQDN}</pre>
                         <p style="margin-bottom: 0px;">
                             <i>Note: The <code>realmd</code> package will need to be installed 
                             if it isn't already.</i>
                         </p>
                         <li>Join the domain:</li>
-                        <pre>realm join [FQDN]</pre>
+                        <pre>realm join {FQDN}</pre>
                         <li>Edit the <code>/etc/pam.d/common-session</code> file and add the following lines:</li>
                         <pre>session optional pam_mkhomedir.so skel=/etc/skel umask=077</pre>
                         <li>
                             Authenticate to check if the machine was machine joined by signing 
-                            in as Administrator@[FQDN]
+                            in as Administrator@{FQDN}
                         </li>
                     </ol>
                     <p style="margin-bottom: 0px;">
@@ -582,7 +631,7 @@
                     </p>
                     <ol>
                         <li>Run the following command:</li>
-                        <pre>hostnamectl set-hostname [new name]</pre>
+                        <pre>hostnamectl set-hostname {new name}</pre>
                         <li>
                             Edit the <code>/etc/hosts</code> file, and replace the 
                             old hostname with the new one
@@ -609,15 +658,15 @@
                     <ol>
                         <li>Edit the <code>/etc/resolv.conf</code> file:</li>
                         <pre><!-- ignore
-                         -->domain [FQDN]
-<!-- ignore              -->search [FQDN]<!-- ignore
+                         -->domain {FQDN}
+<!-- ignore              -->search {FQDN}<!-- ignore
                      --></pre>
                         <li>Search and realm join like in Ubuntu 22</li>
                         <p style="margin-bottom: 0px;"><i>
                             Note: The <code>realmd</code> and <code>sssd</code> packages will need to be 
                             installed if they aren't already.
                         </i></p>
-                        <li>Edit the `/etc/pam.d/common-session` file if needed by adding:</li>
+                        <li>Edit the <code>/etc/pam.d/common-session</code> file if needed by adding:</li>
                         <pre>session optional        pam_mkhomedir.so skel=/etc/skel umask=077</pre>
                         <li>Authenticate</li>
                     </ol>
@@ -629,7 +678,7 @@
                         and allows for communication and data sharing across a network.<br>
                         <i>
                             Note: The root and local Administrator accounts were used, not 
-                            authenticated the Administrator@[FQDN] account.
+                            authenticated the Administrator@{FQDN} account.
                         </i>
                     </p>
                 </section>
@@ -687,13 +736,13 @@
                     <ol>
                         <li>Create user:</li>
                         <pre><!-- ignore
-                         -->CREATE USER '[user]'@'%' IDENTIFIED WITH mysql_native_password BY '[password]';
+                         -->CREATE USER '{user}'@'%' IDENTIFIED WITH mysql_native_password BY '{password}';
 <!-- ignore              -->flush privileges;<!-- ignore
                      --></pre>
                         <li>Create database:</li>
-                        <pre>create database [database];</pre>
+                        <pre>create database {database};</pre>
                         <li>Grant database privileges to user:</li>
-                        <pre>grant all privileges on [database].* to '[user]'@'%';</pre>
+                        <pre>grant all privileges on {database}.* to '{user}'@'%';</pre>
                         <li>Repeat for another user</li>
                     </ol>
                 </section>
@@ -703,10 +752,14 @@
                         Machine: Windows Server 2016<br>
                         Purpose: Hosts a WordPress website
                     </p>
-                    <div class="mt-25"></div>
                     <p style="margin-bottom: 0px;">Download and install XAMPP:</p>
                     <ol>
-                        <li>In the browser, navigate to https://www.apachefriends.org/</li>
+                        <li>
+                            In the browser, navigate to 
+                            <a href="https://www.apachefriends.org/" target="_blank" rel="noopener noreferrer">
+                                <span>https://www.apachefriends.org/</span>
+                            </a>
+                        </li>
                         <li>Download XAMPP for Windows</li>
                         <li>Once the download is done, open the .exe file, and a setup wizard appears</li>
                         <li>Make the following selection:</li>
@@ -715,50 +768,522 @@
                         </ol>
                         <li>Click finish to complete the setup</li>
                     </ol>
+                    <p style="margin-bottom: 0px;">Download, install, and configure WordPress:</p>
+                    <ol>
+                        <li>
+                            In the browser, navigate to 
+                            <a href="https://wordpress.org/download/" target="_blank" rel="noopener noreferrer">
+                                <span>https://wordpress.org/download/</span>
+                            </a>
+                        </li>
+                        <li>Download WordPress</li>
+                        <li>Extract the WordPress .zip folder to the <code>C:\xampp\htdocs\</code> folder</li>
+                        <li>In the browser, navigate to <code>localhost/wp-admin</code></li>
+                        <li>Enter the database credentials:</li>
+                        <ol>
+                            <li>Database: The name of the XAMPP database created in Ubuntu 22</li>
+                            <li>
+                                Username: The username of the database user with privileges to 
+                                the selected database
+                            </li>
+                            <li>Password: The database user's password</li>
+                            <li>Database Host: The Ubuntu 22 IP address</li>
+                        </ol>
+                        <li>Fill out the website information:</li>
+                        <ol>
+                            <li>Username: admin</li>
+                            <li>Password: The same password being used for memorization purposes</li>
+                            <li>Email: email@email.com</li>
+                        </ol>
+                        <li>Install WordPress</li>
+                    </ol>
+                    <p><i>
+                        Note: The WordPress config file is <code>C:\xampp\htdocs\wp-config.php</code>. 
+                        If needed, the website's information can be changed there.<br>
+                        The website does not need to be set up, just accessible.
+                    </i></p>
                 </section>
                 <section id="apache-web-server">
                     <h5>Apache Web Server</h5>
-                    <p>Words</p>
+                    <p>
+                        Machine: CentOS 7<br>
+                        Purpose: Hosts a WordPress website
+                    </p>
+                    <p style="margin-bottom: 0px;">Install and enable Apache:</p>
+                    <ol>
+                        <li>Install the httpd package:</li>
+                        <pre>yum install httpd -y</pre>
+                        <li>Start and enable Apache:</li>
+                        <pre><!-- ignore
+                         -->systemctl start httpd
+<!-- ignore              -->systemctl enable httpd
+<!-- ignore              -->systemctl status httpd<!-- ignore
+                     --></pre>
+                        <p><i>
+                            Note: The main configuration file is located at 
+                            <code>/etc/httpd/conf/httpd.conf</code>, and the other configuration 
+                            files in the same directory.
+                        </i></p>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Install prerequisites:</p>
+                    <ol>
+                        <li>Install PHP and MySQL:</li>
+                        <pre>yum install php php-mysql -y</pre>
+                        <li>Check the PHP version:</li>
+                        <pre>php -v</pre>
+                        <li>If the PHP version is less than 7, update it:</li>
+                        <pre><!-- ignore
+                         -->yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+<!-- ignore              -->yum install yum-utils
+<!-- ignore              -->yum-config-manager --enable remi-php74
+<!-- ignore              -->yum update<!-- ignore
+                        --></pre>
+                        <li>Restart Apache:</li>
+                        <pre>systemctl restart httpd</pre>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Download, install, and configure WordPress:</p>
+                    <ol>
+                        <li>Download the WordPress .tar file:</li>
+                        <pre><!-- ignore
+                         -->cd ~
+<!-- ignore              -->yum install wget -y
+<!-- ignore              -->wget http://wordpress.org/latest.tar.gz<!-- ignore
+                     --></pre>
+                        <li>Extract the file contents:</li>
+                        <pre>tar -xzvf latest.tar.gz</pre>
+                        <li>
+                            Move the WordPress directory to <code>/var/www/html</code> 
+                            and preserve files permissions:
+                        </li>
+                        <pre><!-- ignore
+                         -->yum install rsync -y
+<!-- ignore              -->rsync -avP ~/wordpress/ /var/www/html/<!-- ignore
+                     --></pre>
+                        <li>Create a directory for uploads:</li>
+                        <pre>mkdir /var/www/html/wp-content/uploads</pre>
+                        <li>Update the Apache user's permissions:</li>
+                        <pre>chown -R apache:apache /var/www/html/*</pre>
+                        <li>Navigate to the the <code>/var/www/html</code> directory:</li>
+                        <pre>cd /var/www/html/</pre>
+                        <li>Create the config file using the provided sample:</li>
+                        <pre>cp wp-config-sample.php wp-config.php</pre>
+                        <li>Edit the file and fill out the following database information:</li>
+                        <pre><!-- ignore
+                         -->// ** MySQL settings - You can get this info from your web host ** //
+<!-- ignore              -->/** The name of the database for WordPress */
+<!-- ignore              -->define( 'DB_NAME', '{database name}' );
+<!-- ignore              -->/** MySQL database username */
+<!-- ignore              -->define( 'DB_USER', '{datbase username}' );
+<!-- ignore              -->/** MySQL database password */
+<!-- ignore              -->define( 'DB_PASSWORD', '{database password}' );<!-- ignore
+                     --></pre>
+                        <li>
+                            On the host machine (physical computer), open a browser and go to the 
+                            website using the External IP of the CentOS 7
+                        </li>
+                        <li>Fill in the information like with creating the WordPress on the Windows Server 2016</li>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Troubleshooting:</p>
+                    <ol>
+                        <li>Disable Selinux:</li>
+                        <pre>setsebool -P httpd_can_network_connect=1</pre>
+                        <p><i>
+                            <b>Selinux:</b> A security module created by the NSA. 
+                            Disabling it will allow Apache to connect.
+                        </i></p>
+                    </ol>
                 </section>
                 <section id="nginx-web-proxy">
                     <h5>NGINX Web Proxy</h5>
-                    <p>Words</p>
+                    <p>
+                        Machine: Debian 11<br>
+                        Purpose: Proxy for the IIS website hosted on Windows Server 2012 R2
+                    </p>
+                    <p style="margin-bottom: 0px;">Create the IIS website on Windows Server 2012 R2:</p>
+                    <ol>
+                        <li>Navigate to <code>Server Manager > Manage > Add Roles and Features</code></li>
+                        <li>Make the following selections for the pop-up and click next for other options:</li>
+                        <ol>
+                            <li>Installation Type: Role-Based</li>
+                            <li>Server Roles: Web Server (IIS)</li>
+                        </ol>
+                        <li>Install</li>
+                        <li>Run <code>Win + R</code> and enter <code>inetmgr.exe</code></li>
+                        <li>Click on <code>{Windows Server 2012 R2 Hostname} > View Sites > Add Website</code></li>
+                        <p style="margin-bottom: 0px;"><i>
+                            Note: The default website will be used. The website's port 
+                            information is given.
+                        </i></p>
+                        <li>In the browser, navigate to <code>http://{Windows Server 2012 R2 IP}:80</code></li>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Install and enable NGINX:</p>
+                    <ol>
+                        <li>Install NGINX on Debian 11:</li>
+                        <pre>apt install nginx -y</pre>
+                        <li>Start and enable NGINX:</li>
+                        <pre><!-- ignore
+                         -->systemctl start nginx
+<!-- ignore              -->systemctl enable nginx
+<!-- ignore              -->systemctl status nginx<!-- ignore
+                     --></pre>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Configure the reverse proxy:</p>
+                    <ol>
+                        <li>Unlink the default configuration file:</li>
+                        <pre>unlink /etc/nginx/sites-enabled/default</pre>
+                        <p style="margin-bottom: 0px;"><i>
+                            Note: The reverse needs a custom configuration file, and there can 
+                            be conflicts with having two. The default configuration file will 
+                            be kept as a backup.
+                        </i></p>
+                        <li>Create a new configuration file:</li>
+                        <pre>touch /etc/nginx/sites-available/reverse-proxy</pre>
+                        <p style="margin-bottom: 0px;"><i>
+                            Note: <code>vim</code> and <code>nano</code> can be used in place of <code>touch</code> 
+                            to create and edit the file with one command.
+                        </i></p>
+                        <li>Add the following:</li>
+                        <pre><!-- ignore
+                         -->server {
+<!-- ignore              -->    listen 80;
+<!-- ignore              -->    server_name localhost;
+<!-- ignore              -->    location / {
+<!-- ignore              -->        proxy_pass http://{Windows Server 2012 R2 IP}:80;
+<!-- ignore              -->        proxy_set_header Host $host;
+<!-- ignore              -->        proxy_set_header X-Real-IP $remote_addr;
+<!-- ignore              -->        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+<!-- ignore              -->        proxy_set_header X-Forwarded-Proto $scheme;
+<!-- ignore              -->    }
+<!-- ignore              -->}<!-- ignore
+                     --></pre>
+                        <li>Link and activate the new configuration file:</li>
+                        <pre>ln -s /etc/nginx/sites-available/reverse-proxy /etc/nginx/sites-enabled/</pre>
+                        <li>Confirm the configuration is successful:</li>
+                        <pre>nginx -t</pre>
+                        <li>Restart NGINX:</li>
+                        <pre>systemctl restart nginx</pre>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Test NGINX:</p>
+                    <ol>
+                        <li>On the host machine's browser, navigate to the external IP of the NGINX server</li>
+                    </ol>
                 </section>
                 <section id="smb">
                     <h5>SMB</h5>
-                    <p>Words</p>
+                    <p>
+                        Machine: Windows 7<br>
+                        Purpose: File share accessed by Windows 10
+                    </p>
+                    <p style="margin-bottom: 0px;">Create a Domain User for the Windows 10 Client:<br>
+                        <i>
+                        Note: The user cannot be a local user because it is specific to Windows 10, 
+                        and Windows 7 will not be able to authenticate against it.
+                        </i>
+                    </p>
+                    <ol>
+                        <li>
+                            On the Domain Controller, navigate to 
+                            <code>Active Directory Users and Computers</code>
+                        </li>
+                        <li>Right-click <code>Users > New > User</code></li>
+                        <li>Create a new user and remember the username and password</li>
+                    </ol>
+                    <p>
+                        Create a folder in the C drive (<code>C:\</code>) and 
+                        and add an image of the eggplant emoji inside
+                    </p>
+                    <p style="margin-bottom: 0px;">Share the folder:</p>
+                    <ol>
+                        <li>
+                            Right click the folder and navigate to <code>Properties > Sharing > Share</code>, 
+                            and a menu with a drop down appears
+                        </li>
+                        <li>Click on the <code>drop down arrow > Find People</code></li>
+                        <li>Enter the name of the user and click <code>Check Names</code></li>
+                        <li>Enter the domain username and password and click <code>OK</code></li>
+                        <li>
+                            The drop down appears again. Click on the arrow, select the user, and 
+                            click <code>Share</code>
+                        </li>
+                        <li>Click <code>Done</code> to complete the sharing process</li>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Connect to the SMB Share:</p>
+                    <ol>
+                        <li>Login to the Windows 10</li>
+                        <li>
+                            Open the File Explorer and navigate to 
+                            <code>This PC > Computer > Map Network Drive</code>
+                        </li>
+                        <li>In the folder text input, enter: <code>\\{Windows 7 IP}\{folder name}</code></li>
+                        <li>
+                            Select <code>Connecting Using Different Credentials</code> and click 
+                            <code>Finish</code>
+                        </li>
+                        <li>Enter the credentials for the user that was created</li>
+                    </ol>
                 </section>
                 <section id="sftp">
                     <h5>SFTP</h5>
-                    <p>Words</p>
+                    <p>
+                        Machine: Ubuntu 18<br>
+                        Purpose: File share accessed by the Windows 10
+                    </p>
+                    <p style="margin-bottom: 0px;">Ensure that SSH is installed:</p>
+                    <ol>
+                        <li>Search for if the package is installed:</li>
+                        <pre>dpkg -l | grep ssh</pre>
+                        <li>Install SSH as needed:</li>
+                        <pre>apt install ssh -y</pre>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Configure SSH:</p>
+                    <ol>
+                        <li>Edit the <code>/etc/ssh/sshd_config</code> file</li>
+                        <li>Add the following:</li>
+                        <pre><!-- ignore
+                         -->Match Group {SFTP group}
+<!-- ignore              -->ChrootDirectory %h
+<!-- ignore              -->X11Forwarding no
+<!-- ignore              -->AllowTcpForwarding no
+<!-- ignore              -->ForceCommand internal-sftp<!-- ignore
+                     --></pre>
+                        <li>Restart SSH</li>
+                        <pre>systemctl status ssh</pre>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Create an SFTP user and group:</p>
+                    <ol>
+                        <li>Create the user and group:</li>
+                        <pre><!-- ignore
+                         -->groupadd {SFTP group}
+<!-- ignore              -->useradd -G {SFTP group} -d /srv/{SFTP user} -s /sbin/nologin {SFTP user}<!-- ignore
+                     --></pre>
+                        <li>Change the SFTP user's password:</li>
+                        <pre>passwd {SFTP user}</pre>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Create an SFTP directory:</p>
+                    <ol>
+                        <li>Setup a chroot directory:</li>
+                        <pre><!-- ignore
+                         -->mkdir -p /srv/{SFTP user}
+<!-- ignore              -->chown root /srv/{SFTP user}
+<!-- ignore              -->chmod g+rx /srv/{SFTP user}
+<!-- ignore              -->mkdir -p /srv/{SFTP user}/data
+<!-- ignore              -->chown {SFTP user}:{SFTP user} /srv/{SFTP user}/data<!-- ignore
+                     --></pre>
+                        <p><i>
+                            <b>Chroot directory:</b> Acts as the root directory for 
+                            certain processes (root directory for the SFTP user).
+                        </i></p>
+                        <li>Navigate to the <code>data</code> directory:</li>
+                        <pre>cd /srv/{SFTP user}/data</pre>
+                        <li>Add an image of the peach emoji to the directory:</li>
+                        <pre>wget {image address}</pre>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Connect to the SFTP server:</p>
+                    <ol>
+                        <li>In the Windows 10, open the terminal and enter:</li>
+                        <pre><!-- ignore
+                         -->sftp sftpuser@{Ubuntu 18 IP}
+<!-- ignore              -->ls /data/<!-- ignore
+                     --></pre>
+                    </ol>
                 </section>
                 <section id="security-considerations">
                     <h4>Security Considerations</h4>
-                    <p>Words</p>
+                    <p>
+                        This covers some things to think about in relation to security 
+                        such as service configurations, file permissions, passwords, and firewalls.
+                    </p>
                 </section>
                 <section id="proprietary-data">
                     <h5>Proprietary Data</h5>
-                    <p>Words</p>
+                    <p>
+                        Proprietary data: 🍆<br>
+                        The proprietary data will not be leaked. There was a domain user 
+                        created for the SMB share, and only that user is able to access it.
+                    </p>
                 </section>
                 <section id="hr-data">
                     <h5>HR Data</h5>
-                    <p>Words</p>
+                    <p>
+                        HR data: 🍑<br>
+                        The HR data was secured with SFTP. A new group, user, and password 
+                        were created for SFTP. A chroot directory was made so the user is 
+                        restricted to that directory, where they only have read permissions, meaning 
+                        the SFTP user can only see items in the directory but can't make changes to it.
+                    </p>
                 </section>
                 <section id="iis-server">
                     <h5>IIS Server</h5>
-                    <p>Words</p>
+                    <p>
+                        The IIS website should only be accessible through the reverse proxy. 
+                        However, it can be accessed using {Windows Server 2012 R2 IP}. This 
+                        can be changed with firewalls.<br>
+                        <b>Firewall:</b> A networking tool that manages network traffic.
+                    </p>
+                    <p style="margin-bottom: 0px;">
+                        Make sure the Windows Server 2012 R2 firewalls are on and check default policies (GUI):
+                    </p>
+                    <ol>
+                        <li>
+                            Run <code>Win + R</code> and enter <code>wf.msc</code>. The overview should show 
+                            the firewall profiles are on:
+                        </li>
+                        <img src="./images/windows-firewall-overview.png" alt="Overview of Windows Firewall.">
+                        <li>
+                            Click on <code>Windows Defender Firewall Properties</code>. 
+                            For each profile, ensure the inbound connections are set to block and 
+                            the outbound connections are set to allow
+                        </li>
+                    </ol>
+                    <p style="margin-bottom: 0px;">Add an inbound rule (GUI):</p>
+                    <ol>
+                        <li>Click on <code>Inbound Rules > New Rule</code></li>
+                        <li>Make the following selections:</li>
+                        <ol>
+                            <li>Rule Type: Custom</li>
+                            <li>Program: All Programs</li>
+                            <li>Protocols and Ports > Protocol Type: TCP</li>
+                            <li>Protocols and Ports > Local Port: Specific Ports, 80</li>
+                            <li>Scope > Remote IP: {Ubuntu 22 IP}</li>
+                            <li>Action: Allow the Connection</li>
+                            <li>Profile: All</li>
+                            <li>Name: Enter a name for the rule</li>
+                        </ol>
+                        <li>Click <code>Finish</code> to complete creating a new rule</li>
+                    </ol>
+                    <p style="margin-bottom: 0px;">
+                        Check if the IIS site can still be reached using {Windows Server 2012 R2 IP}:
+                    </p>
+                    <ol>
+                        <li>On the host machine, navigate to the external IP of the Windows Server 2012 R2</li>
+                        <li>
+                            If it can be reached that way, there might be conflicting inbound 
+                            firewall rules that affect connections to port 80
+                        </li>
+                        <li>
+                            Filter the inbound rules by local port: Scroll sideways and click 
+                            on <code>Local Port</code> until the top ports start with <code>RCP</code>
+                        </li>
+                        <li>Scroll down, find active rules for port 80, and disable them</li>
+                    </ol>
                 </section>
                 <section id="nsas-beast">
                     <h5>NSA's Beast</h5>
-                    <p>Words</p>
+                    <p>
+                        NSA created EternalBlue, a vulnerability found within SMBv1 that can be 
+                        exploited to gain unauthorized access.
+                    </p>
+                    <p style="margin-bottom: 0px;">Preventing EternalBlue:</p>
+                    <ol>
+                        <li>Disable/remove SMBv1 (in PowerShell):</li>
+                        <pre><!-- ignore
+                         -->Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
+<!-- ignore              -->Set-SmbServerConfiguration -EnableSMB1Protocol $false<!-- ignore
+                     --></pre>
+                        <li>Upgrade to a higher version of SMB</li>
+                    </ol>
                 </section>
                 <section id="wordpress-creds">
                     <h5>WordPress Creds</h5>
-                    <p>Words</p>
+                    <p>
+                        Remember the WordPress credentials and Ensure they credentials are 
+                        memorable but difficult to guess.
+                    </p>
                 </section>
                 <section id="pci-dss">
                     <h5>PCI DSS</h5>
-                    <p>Words</p>
+                    <p>
+                        <b>Payment Card Industry Data Security Standard (PCI DSS):</b> A mandatory 
+                        security framework that handles cardholder information.<br>
+                        <a href="https://listings.pcisecuritystandards.org/documents/PCI_DSS-QRG-v3_2_1.pdf" target="_blank" rel="noopener noreferrer">
+                            <span>Requirement 1:</span>
+                        </a>
+                        “Install and maintain a firewall configuration to protect cardholder data”<br>
+                        In Evan's Lab: Add firewalls on the machines, not including the router, to only 
+                        allow necessary traffic.
+                    </p>
+                    <h6>Network Topology:</h6>
+                    <img src="./images/evan's-lab-network-diagram.png" alt="Evan's Lab network topology.">
+                    <p><i>
+                        Note: Please refer to the chart in the 
+                        <a href="#network-configuration"><span>Network Configuration</span></a> 
+                        section for the machines and their respective hostnames.
+                    </i></p>
+                    <p>
+                        <b style="color:#73822e;">DC01:</b><br>
+                        Port requirements: None<br>
+                        There's no additional firewalls to add because Windows Firewall has preset AD rules.
+                    </p>
+                    <p>
+                        <b style="color:#73822e;">DC02:</b><br>
+                        Port requirements: TCP 80 (inbound from WEB03)<br>
+                        There's no additional firewalls to add because Windows Firewall has preset AD rules, 
+                        and the required rule was already added in the IIS server security consideration.
+                    </p>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color:#73822e;">WEB03:</b><br>
+                        Port requirements: TCP 80 (inbound from WKS01), TCP 80 (outbound to DC02)
+                    </p>
+                    <pre style="margin-bottom: 25px;"><!-- ignore
+                     -->iptables -F
+<!-- ignore          -->iptables -A INPUT -m conntrack --ctstsate ESTABLISHED,RELATED -j ACCEPT
+<!-- ignore          -->iptables -A OUTPUT -m conntrack --ctstsate ESTABLISHED,RELATED -j ACCEPT
+<!-- ignore          -->iptables -A INPUT -p tcp -s {Windows 10 IP} --dport 80 -j ACCEPT
+<!-- ignore          -->iptables -A OUTPUT -p tcp -d {Windows Server 2012 R2 IP} --dport 80 -j ACCEPT
+<!-- ignore          -->iptables -P OUTPUT DROP
+<!-- ignore          -->iptables -P INPUT DROP<!-- ignore
+                --></pre>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color:#73822e;">SQL01:</b><br>
+                        Port requirements: TCP 3306 (inbound from WEB01 and WEB02)
+                    </p>
+                    <pre style="margin-bottom: 25px;"><!-- ignore
+                        -->iptables -F
+<!-- ignore             -->iptables -A INPUT -m conntrack --ctstsate ESTABLISHED,RELATED -j ACCEPT
+<!-- ignore             -->iptables -A OUTPUT -m conntrack --ctstsate ESTABLISHED,RELATED -j ACCEPT
+<!-- ignore             -->iptables -A INPUT -p tcp -s {Windows Server 2016 IP} --dport 3306 -j ACCEPT
+<!-- ignore             -->iptables -A INPUT -p tcp -s {CentOS 7 IP} --dport 3306 -j ACCEPT
+<!-- ignore             -->iptables -P OUTPUT DROP
+<!-- ignore             -->iptables -P INPUT DROP<!-- ignore
+                --></pre>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color:#73822e;">WEB01 and WEB02:</b><br>
+                        Port requirements: TCP 80 (inbound from WKS01), TCP 3306 (outbound to SQL01)<br>
+                        WEB01 rules can be added with the Windows Firewall GUI, and WEB02 rules can be 
+                        added with iptables.
+                    </p>
+                    <pre style="margin-bottom: 25px;"><!-- ignore
+                        -->iptables -F
+<!-- ignore             -->iptables -A INPUT -m conntrack --ctstsate ESTABLISHED,RELATED -j ACCEPT
+<!-- ignore             -->iptables -A OUTPUT -m conntrack --ctstsate ESTABLISHED,RELATED -j ACCEPT
+<!-- ignore             -->iptables -A INPUT -p tcp -s {Windows 10 IP} --dport 80 -j ACCEPT
+<!-- ignore             -->iptables -A OUTPUT -p tcp -d {Ubuntu 22 IP} --dport 3306 -j ACCEPT
+<!-- ignore             -->iptables -P OUTPUT DROP
+<!-- ignore             -->iptables -P INPUT DROP<!-- ignore
+                --></pre>
+                    <p>
+                        <b style="color:#73822e;">SMB01:</b><br>
+                        Port requirements: TCP 445 (inbound from WKS01), all ports (outbound to DC01 and DC02)<br>
+                        This can be done through the Windows Firewall GUI.
+                    </p>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color:#73822e;">SFTP01:</b><br>
+                        Port requirements: TCP 22 (inbound from WKS01)<br>
+                    </p>
+                    <pre style="margin-bottom: 25px;"><!-- ignore
+                        -->iptables -F
+<!-- ignore             -->iptables -A INPUT -m conntrack --ctstsate ESTABLISHED,RELATED -j ACCEPT
+<!-- ignore             -->iptables -A OUTPUT -m conntrack --ctstsate ESTABLISHED,RELATED -j ACCEPT
+<!-- ignore             -->iptables -A INPUT -p tcp -s {Windows 10 IP} --dport 22 -j ACCEPT
+<!-- ignore             -->iptables -P OUTPUT DROP
+<!-- ignore             -->iptables -P INPUT DROP<!-- ignore
+                --></pre>
+                    <p style="margin-bottom: 0px;">
+                        <b style="color:#73822e;">WKS01:</b><br>
+                        Port requirements: TCP 80 (outbound to WEB01, WEB02, and WEB03), 
+                        TCP 445 (outbound to SMB01), TCP 22 (outbound to SFTP01)<br>
+                        This can be done through the Windows Firewall GUI.
+                    </p>
                 </section>
             </div>
             <div class="section-padding"></div>
