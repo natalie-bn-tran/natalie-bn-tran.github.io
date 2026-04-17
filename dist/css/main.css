@@ -121,6 +121,12 @@ pre {
   pre {
     font-size: 16px;
   }
+  ul {
+    font-size: 12px;
+  }
+  ol {
+    font-size: 12px;
+  }
   .fs-6 {
     font-size: 16px !important;
   }
@@ -243,7 +249,16 @@ table .no-left-border {
 
 table .no-right-border {
   border-right: none;
-} 
+}
+
+@media (max-width: 420px) {
+  table th {
+    font-size: 15px;
+  }
+  table td {
+    font-size: 12px;
+  }
+}
 
 .blog-page-header {
   padding-top: 75px;
