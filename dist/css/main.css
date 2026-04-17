@@ -122,10 +122,16 @@ pre {
     font-size: 16px;
   }
   ul {
-    font-size: 12px;
+    font-size: 16px;
+  }
+  ul li {
+    font-size: 16px;
   }
   ol {
-    font-size: 12px;
+    font-size: 16px;
+  }
+  ol li {
+    font-size: 16px;
   }
   .fs-6 {
     font-size: 16px !important;
@@ -216,7 +222,7 @@ table {
   border-collapse: separate;
   border-spacing: 0px;
   border-radius: 15px;
-  overflow: hidden;
+  overflow-x: auto;
   margin-top: 25px;
   margin-bottom: 25px;
 }
@@ -253,10 +259,10 @@ table .no-right-border {
 
 @media (max-width: 420px) {
   table th {
-    font-size: 15px;
+    font-size: 19px;
   }
   table td {
-    font-size: 12px;
+    font-size: 16px;
   }
 }
 
@@ -363,6 +369,12 @@ table .no-right-border {
   text-decoration: none;
   content: " ↗";
   color:#73822e;
+}
+
+@media (max-width: 420px) {
+  .article-main li {
+    font-size: 16px;
+  }
 }
 
 .toc {
